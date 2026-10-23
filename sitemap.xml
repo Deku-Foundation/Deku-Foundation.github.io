@@ -138,5 +138,40 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/faq/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/faq/"/>
   </url>
-  <url><loc>https://deku-foundation.github.io/docs/website-standards.html</loc></url>
+  <url><loc>https://deku-foundation.github.io/docs/website-standards.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/docs/website-standards.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/docs/website-standards/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/docs/website-standards/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/docs/website-standards.html"/>
+  </url>
+  <url><loc>https://deku-foundation.github.io/fr/docs/website-standards/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/docs/website-standards.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/docs/website-standards/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/docs/website-standards/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/docs/website-standards.html"/>
+  </url>
+  <url><loc>https://deku-foundation.github.io/ar/docs/website-standards/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/docs/website-standards.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/docs/website-standards/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/docs/website-standards/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/docs/website-standards.html"/>
+  </url>
+  <url><loc>https://deku-foundation.github.io/architecture/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/architecture/"/>
+  </url>
+  <url><loc>https://deku-foundation.github.io/fr/architecture/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/architecture/"/>
+  </url>
+  <url><loc>https://deku-foundation.github.io/ar/architecture/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/architecture/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/architecture/"/>
+  </url>
 </urlset>
