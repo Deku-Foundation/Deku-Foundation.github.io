@@ -42,6 +42,17 @@
 <li>Respect reduced-motion preferences, support small screens and keep long lines and dense navigation under control.</li>
 </ul>
 
+<h2>Design review — October 2026</h2>
+<p>The review kept the site dependency-free and retained its evergreen identity. The goal is a project workspace, not a generic startup landing page: technical status, next steps and links to the source should come before slogans or decoration.</p>
+<ul>
+<li><strong>What stays:</strong> the locally maintained SVG mark, green-and-paper palette, design tokens, responsive HTML, semantic structure, keyboard focus, skip link, reduced-motion handling and explicit English/French/Arabic routes. These choices serve the project and are not a reason to copy another product’s branding.</li>
+<li><strong>What changed in this revision:</strong> the homepage names the actual prototype scope instead of making a broad trust claim; the engineering page maps each repository to its issues, pull requests and Actions; the navigation gives Architecture and Engineering stable first-class routes; small status labels and prose have been enlarged and darkened.</li>
+<li><strong>What is deliberately absent:</strong> fake customer quotes, usage metrics, star counts, release countdowns, download buttons, live badges that are not backed by the current workflow, stock illustrations and animations that serve no interaction.</li>
+<li><strong>How to decide on a framework:</strong> keep static HTML while the page count and content volume remain manageable. Evaluate Astro/Starlight if shared page templates, search, sidebars or translation maintenance become demonstrably expensive; do not migrate just to adopt a fashionable stack.</li>
+</ul>
+<p>The contrast checks now cover the muted body text and both status badges using the WCAG relative-luminance calculation. The measured pairs are 5.54:1 for <code>#58675e</code> on <code>#f5f7f2</code>, 8.64:1 for <code>#18563a</code> on white, 4.86:1 for the research badge, and 5.65:1 for the prototype badge. These targeted checks are regression guards, not a declaration that the whole site conforms to WCAG 2.2 AA; keyboard, zoom, screen-reader, Arabic shaping and real-browser review are still required.</p>
+<p>Reference material: <a href="https://primer.style/product/getting-started/foundations/" target="_blank" rel="noopener noreferrer">Primer foundations ↗</a>, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">WCAG 2.2 ↗</a>, <a href="https://starlight.astro.build/guides/i18n/" target="_blank" rel="noopener noreferrer">Starlight internationalisation ↗</a>, <a href="https://design-system.service.gov.uk/" target="_blank" rel="noopener noreferrer">GOV.UK Design System ↗</a>.</p>
+
 <h2>Language and right-to-left support</h2>
 <p>English is the default route; French lives under <code>/fr/</code> and Arabic under <code>/ar/</code>. Each page sets an accurate HTML <code>lang</code> value. Arabic pages set <code>dir="rtl"</code> on the root element and use CSS logical properties for inline and block spacing. Links use visible language names and remain usable without JavaScript.</p>
 <p>Equivalent pages should use canonical URLs and language alternates when the translation exists. Keep page structure equivalent, translate user-facing navigation and status text, and do not label untranslated content as translated. Native-language review is still recommended before claiming editorial translation quality.</p>
