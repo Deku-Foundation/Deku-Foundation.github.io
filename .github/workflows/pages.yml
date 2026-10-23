@@ -325,6 +325,8 @@ jobs:
         run: python3 scripts/check_sitemap.py
       - name: Reject obsolete repository links
         run: python3 scripts/check_repository_links.py
+      - name: Check website design-token contrast and microtype
+        run: python3 scripts/check_design_tokens.py
       - name: Check JavaScript syntax
         run: node --check assets/main.js
 
