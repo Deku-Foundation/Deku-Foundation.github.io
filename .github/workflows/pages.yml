@@ -139,6 +139,129 @@ jobs:
               sys.exit(1)
           print(f"Validated {len(files)} HTML files for local links, language metadata, unique IDs, image alternatives and core document structure.")
           PY
+      - name: Validate canonical URLs, language alternates and sitemap coverage
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import sys
+          import xml.etree.ElementTree as ET
+
+          ROOT = Path(".").resolve()
+          ORIGIN = "https://deku-foundation.github.io"
+          SITEMAP_NS = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+          XHTML_NS = "{http://www.w3.org/1999/xhtml}"
+
+          def route_to_file(url):
+              parsed = urlparse(url)
+              if parsed.scheme or parsed.netloc:
+                  if parsed.scheme != "https" or parsed.netloc != "deku-foundation.github.io":
+                      raise ValueError(f"unexpected canonical host: {url}")
+              route = parsed.path or "/"
+              if not route.startswith("/") or ".." in route.split("/"):
+                  raise ValueError(f"invalid public route: {url}")
+              candidate = (ROOT / route.lstrip("/")).resolve()
+              if candidate.is_dir():
+                  candidate = candidate / "index.html"
+              elif route.endswith("/"):
+                  candidate = candidate / "index.html"
+              if ROOT not in candidate.parents and candidate != ROOT:
+                  raise ValueError(f"route escapes repository: {url}")
+              return candidate
+
+          class Metadata(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.canonical = []
+                  self.alternates = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if tag.lower() != "link":
+                      return
+                  rel = set(attrs.get("rel", "").lower().split())
+                  if "canonical" in rel and attrs.get("href"):
+                      self.canonical.append(attrs["href"])
+                  if "alternate" in rel and attrs.get("hreflang") and attrs.get("href"):
+                      self.alternates.append((attrs["hreflang"], attrs["href"]))
+
+          errors = []
+          sitemap_path = ROOT / "sitemap.xml"
+          try:
+              sitemap = ET.parse(sitemap_path).getroot()
+          except (ET.ParseError, OSError) as exc:
+              print(f"sitemap.xml: cannot parse XML: {exc}")
+              sys.exit(1)
+
+          sitemap_urls = set()
+          for url_node in sitemap.findall(f"{SITEMAP_NS}url"):
+              loc_node = url_node.find(f"{SITEMAP_NS}loc")
+              if loc_node is None or not (loc_node.text or "").strip():
+                  errors.append("sitemap.xml: each url entry must have a non-empty loc")
+                  continue
+              loc = loc_node.text.strip()
+              sitemap_urls.add(loc)
+              try:
+                  target = route_to_file(loc)
+                  if not target.is_file():
+                      errors.append(f"sitemap.xml: URL does not resolve to a file: {loc}")
+              except ValueError as exc:
+                  errors.append(f"sitemap.xml: {exc}")
+
+              for alternate in url_node.findall(f"{XHTML_NS}link"):
+                  if alternate.attrib.get("rel") != "alternate":
+                      continue
+                  href = alternate.attrib.get("href", "")
+                  lang = alternate.attrib.get("hreflang", "")
+                  if not lang or not href:
+                      errors.append(f"sitemap.xml: alternate link needs hreflang and href under {loc}")
+                      continue
+                  if href not in sitemap_urls and href not in {
+                      node.find(f"{SITEMAP_NS}loc").text.strip()
+                      for node in sitemap.findall(f"{SITEMAP_NS}url")
+                      if node.find(f"{SITEMAP_NS}loc") is not None and node.find(f"{SITEMAP_NS}loc").text
+                  }:
+                      errors.append(f"sitemap.xml: alternate {lang} is not a listed URL: {href}")
+                  try:
+                      if not route_to_file(href).is_file():
+                          errors.append(f"sitemap.xml: alternate target is missing: {href}")
+                  except ValueError as exc:
+                      errors.append(f"sitemap.xml: {exc}")
+
+          html_files = sorted(path for path in ROOT.rglob("*.html") if ".git" not in path.parts)
+          for file in html_files:
+              parser = Metadata()
+              try:
+                  parser.feed(file.read_text(encoding="utf-8"))
+              except (OSError, UnicodeDecodeError) as exc:
+                  errors.append(f"{file}: cannot read HTML: {exc}")
+                  continue
+              if len(parser.canonical) != 1:
+                  errors.append(f"{file}: expected exactly one canonical URL, found {len(parser.canonical)}")
+              else:
+                  try:
+                      if route_to_file(parser.canonical[0]) != file.resolve():
+                          errors.append(f"{file}: canonical URL points to a different file: {parser.canonical[0]}")
+                      if parser.canonical[0] not in sitemap_urls:
+                          errors.append(f"{file}: canonical URL is missing from sitemap.xml: {parser.canonical[0]}")
+                  except ValueError as exc:
+                      errors.append(f"{file}: {exc}")
+              for lang, href in parser.alternates:
+                  if lang not in {"en", "fr", "ar", "x-default"}:
+                      errors.append(f"{file}: unsupported hreflang {lang!r}")
+                  try:
+                      if not route_to_file(href).is_file():
+                          errors.append(f"{file}: hreflang target is missing: {href}")
+                      if href not in sitemap_urls:
+                          errors.append(f"{file}: hreflang target is not in sitemap.xml: {href}")
+                  except ValueError as exc:
+                      errors.append(f"{file}: {exc}")
+
+          if errors:
+              print("\\n".join(errors))
+              sys.exit(1)
+          print(f"Validated {len(sitemap_urls)} sitemap URLs and canonical/hreflang metadata for {len(html_files)} HTML pages.")
+          PY
       - name: Check JavaScript syntax
         run: node --check assets/main.js
 
