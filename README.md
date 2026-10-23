@@ -16,6 +16,8 @@ The primary project pages are available in English, French and Arabic: overview,
 - `fr/` and `ar/` — translated page routes with equivalent information architecture.
 - `about.html` — project goals, current status and upstream reuse principles.
 - `docs/` — documentation landing page and website standards.
+- `architecture/` — evidence-led system design in English, French and Arabic, including upstream lessons, compatibility limits, store/generation recovery, security boundaries and release gates.
+- `scripts/check_sitemap.py` — dependency-free checks for sitemap targets and reciprocal language alternates.
 - `install/` — release status; no official ISO download is advertised.
 - `security/` — security posture and reporting guidance.
 - `community/` — contribution channels and review expectations.
@@ -24,7 +26,7 @@ The primary project pages are available in English, French and Arabic: overview,
 - `assets/styles.css` — green design tokens, responsive components, RTL rules and reduced-motion support.
 - `assets/main.js` — small progressive enhancement for the responsive navigation and current year.
 - `sitemap.xml` and `robots.txt` — search-engine discovery.
-- `.github/workflows/pages.yml` — local-link, document structure, language metadata, image alternative, JavaScript and deployment checks.
+- `.github/workflows/pages.yml` — local-link, document structure, language metadata, image alternatives, sitemap/hreflang, JavaScript and deployment checks.
 
 ## Design and implementation decisions
 
@@ -48,7 +50,7 @@ No npm install or compilation step is required.
 
 Pull requests run the website validation workflow. The deploy job is gated to a push to the default branch after validation succeeds and receives Pages permissions only in that job. A successful pull-request check is not proof that production deployment completed; verify the default-branch deployment and the published URL separately.
 
-Before merge, review local links and language routes, run the GitHub Actions checks, and inspect the English, French and Arabic pages at desktop and mobile widths. Manual review must include keyboard-only navigation, visible focus, zoom, reduced motion, Arabic text direction, mixed Arabic/English technical terms and actual language-switch targets.
+The architecture guide records the proposed compatibility policy and links to primary upstream documentation rather than presenting design proposals as completed functionality. Before merge, review local links and language routes, run the GitHub Actions checks, and inspect the English, French and Arabic pages at desktop and mobile widths. Manual review must include keyboard-only navigation, visible focus, zoom, reduced motion, Arabic text direction, mixed Arabic/English technical terms and actual language-switch targets.
 
 ## Public-status rule
 
