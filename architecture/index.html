@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12372a"><meta name="description" content="Deku Linux architecture: what to adopt from Nix, Fedora, Void and Flatpak, what to build natively, and how to make compatibility safe and testable.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Deku Linux"><meta property="og:title" content="System architecture — Deku Linux"><meta property="og:description" content="A documented plan for package trust, immutable storage, recovery, compatibility and desktop applications.">
+<link rel="canonical" href="https://deku-foundation.github.io/architecture/">
+<link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/architecture/"><link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/architecture/"><link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/architecture/"><link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/architecture/">
+<link rel="icon" type="image/svg+xml" href="../assets/deku-mark.svg"><link rel="stylesheet" href="../assets/styles.css"><script src="../assets/main.js" defer></script><title>System architecture — Deku Linux</title>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="container nav-wrap"><a class="brand" href="../" aria-label="Deku Linux home"><img src="../assets/deku-mark.svg" width="40" height="40" alt=""><span class="brand-wordmark">Deku<span> Linux</span><small>FOUNDATION</small></span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">Open navigation</span><span></span><span></span></button><nav id="primary-nav" class="primary-nav" aria-label="Main navigation"><a href="../#platform">Platform</a><a href="../docs/">Documentation</a><a href="../roadmap/">Roadmap</a><a href="../community/">Community</a><a href="../security/">Security</a><a href="../install/">Release status</a></nav><div class="language-switch" aria-label="Choose language"><a href="./" lang="en" aria-current="page">EN</a><a href="../fr/architecture/" lang="fr">FR</a><a href="../ar/architecture/" lang="ar" dir="rtl">ع</a></div><a class="nav-github" href="https://github.com/Deku-Foundation" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></header>
+<main id="main">
+<section class="inner-hero"><div class="container"><p class="eyebrow">Engineering / Architecture</p><h1>Broad compatibility. Narrow trust.</h1><p class="lede">Deku aims to make a wide range of software usable without pretending every package format, ABI, service model or installer is interchangeable. The design goal is to reuse mature upstream components where they solve a problem well, and build only the integration that makes Deku coherent.</p></div></section>
+<section class="content-section"><div class="container content-layout"><nav class="content-nav" aria-label="On this page"><strong>Architecture</strong><a href="#decision">Decision summary</a><a href="#upstream">Upstream lessons</a><a href="#store">Storage and recovery</a><a href="#compatibility">Compatibility policy</a><a href="#security">Security boundaries</a><a href="#release">Release gates</a><a href="../docs/">Documentation</a></nav>
+<article class="prose">
+<div class="notice"><strong>Project status:</strong> this page describes a proposed target architecture and evidence-based design choices. It is not a claim that the package manager, immutable store, sandboxed build service, rollback system or installer is production-ready.</div>
+<h2 id="decision">Decision summary</h2>
+<ul>
+<li><strong>Native system packages:</strong> a Rust package manager and reviewed Deku recipes, backed by signed repository metadata and immutable package artifacts.</li>
+<li><strong>Builds:</strong> a separate build service, pinned source revisions and checksums, unprivileged workers, network-disabled build phases, recorded provenance and reproducible-build work where practical.</li>
+<li><strong>System updates:</strong> immutable package payloads selected through explicit system generations; stage changes before activation and retain a known-good bootable generation.</li>
+<li><strong>Desktop apps:</strong> integrate upstream Flatpak rather than implement a second Flatpak runtime or sandbox.</li>
+<li><strong>Compatibility imports:</strong> disabled by default. Inspect RPM/DEB archives without running maintainer scripts; prefer rebuilding from source or using Flatpak.</li>
+<li><strong>Desktop:</strong> KDE Plasma first. Keep desktop integration modular so GNOME can be added without changing package trust or transaction semantics.</li>
+<li><strong>Kernel:</strong> track stable releases for supported images; test mainline builds separately. A newer version number is not a substitute for boot, driver, update and recovery tests.</li>
+</ul>
+<h2 id="upstream">What to learn from established projects</h2>
+<h3>Nix: immutable store and generations</h3>
+<p>Nix demonstrates the value of keeping package payloads in versioned store paths and switching user or system profiles between known states. Deku should adopt immutable payloads, explicit generations and rollback semantics, but not copy Nix evaluation or derivation semantics wholesale. The store needs a defined garbage-collection policy, disk-space preflight, profile ownership and protection against deleting live references. Nix itself documents sandboxed builds and its store model in its <a href="https://nix.dev/manual/nix/latest/">manual</a>.</p>
+<h3>Fedora: mature package workflows and image-based deployment</h3>
+<p>Fedora offers two useful lessons: conventional RPM-based package management has a large ecosystem, while rpm-ostree and bootc explore image-based, staged operating-system updates. Deku should not recreate DNF, RPM or OCI image machinery without a compelling interoperability requirement. The practical lesson is to stage changes, verify the next bootable state, keep recovery paths, and separate OS lifecycle from desktop application delivery. See the <a href="https://docs.fedoraproject.org/">Fedora documentation</a> and <a href="https://bootc-dev.github.io/bootc/">bootc project</a>.</p>
+<h3>Void Linux: explicit packages and a separate build tool</h3>
+<p>Void's XBPS and xbps-src illustrate the value of separating binary package installation from package building, keeping package metadata explicit, and testing builds in constrained environments. Deku should preserve that separation: the client must not become a privileged build executor, and recipe review must remain distinct from repository publication. See the <a href="https://docs.voidlinux.org/">Void handbook</a>.</p>
+<h3>Flatpak: application sandboxing and runtimes</h3>
+<p>Flatpak is the preferred compatibility route for many third-party desktop applications because it already has a runtime model, application permissions and integration with Flathub. Deku should call the upstream tools and expose origin, permissions and update state clearly. Flatpak does not replace the native package manager for kernels, drivers, host services or system libraries. Read the <a href="https://docs.flatpak.org/">Flatpak documentation</a> before defining the integration contract.</p>
+<h2 id="store">Store, activation and recovery</h2>
+<p>Proposed layout: immutable payloads under <code>/deku/store/&lt;content-id&gt;</code>, selectable system profiles under <code>/deku/profiles/system/&lt;generation&gt;</code>, mutable machine state under <code>/deku/var</code>, and administrator-managed configuration under <code>/etc</code>. User data remains in normal home directories and XDG locations.</p>
+<ul>
+<li>Package payloads are content-identified and never overwritten in place.</li>
+<li>A transaction resolves dependencies, verifies signatures and digests, checks free space, downloads to a staging area, validates every artifact, and prepares a new generation before activation.</li>
+<li>Activation must be atomic at the profile/boot-selection boundary. If staging fails, the active generation remains unchanged.</li>
+<li>Keep at least one previous known-good generation, but define bounded retention and safe garbage collection of unreferenced store objects.</li>
+<li>Do not treat a symlink switch alone as complete integration. ELF interpreters, RPATH, plugin discovery, desktop files, icons, D-Bus services, systemd units, udev rules, initramfs generation and kernel modules need explicit handling and tests.</li>
+<li>Keep machine configuration and mutable application data out of immutable package payloads. Migrations must be explicit and have failure behavior.</li>
+</ul>
+<h2 id="compatibility">A compatibility policy that does not overpromise</h2>
+<div class="link-grid">
+<div class="resource-link"><strong>1. Official Deku packages</strong><span>Default trusted route for system components. Reviewed recipes, pinned inputs, explicit dependencies, signed repository snapshots and a supported update policy.</span></div>
+<div class="resource-link"><strong>2. Rebuild from source</strong><span>Preferred for unsupported software when the license and source permit it. Review patches, build in isolation, record provenance and test on Deku.</span></div>
+<div class="resource-link"><strong>3. Flatpak / Flathub</strong><span>Preferred for many desktop applications. Use upstream sandbox and runtime tooling; show application permissions and origin to the user.</span></div>
+<div class="resource-link"><strong>4. RPM / DEB import (advanced)</strong><span>Off by default. Inspect archive metadata and file paths without executing scripts. Reject unsupported maintainer hooks, file conflicts, privileged service setup and incompatible dependencies. Never run imported install/remove scripts as root.</span></div>
+</div>
+<p>“Supports everything” should mean a documented route for evaluating and running different software—not a promise that every binary package installs unchanged. CPU architecture, libc and ABI, kernel interfaces, filesystem layout, service managers, graphics stacks, licenses and application assumptions all affect compatibility.</p>
+<h2 id="security">Security boundaries and threat model</h2>
+<ul>
+<li><strong>Repository trust:</strong> verify signed metadata, key identity, expiry/freshness and rollback protection. Separate repository signing keys from build workers and website deployment credentials; document key rotation and revocation.</li>
+<li><strong>Artifact integrity:</strong> a checksum detects byte changes but does not establish who published the bytes. Verify both the signed metadata chain and the artifact digest.</li>
+<li><strong>Build isolation:</strong> unprivileged, disposable workers; restricted mounts and namespaces; deny network access during build steps unless a separately reviewed fetch phase is required. Apply seccomp and Landlock where supported, with defense in depth rather than treating one sandbox feature as a complete boundary.</li>
+<li><strong>Archive extraction:</strong> reject absolute paths, traversal, unsafe links, duplicate/conflicting paths, device nodes and unexpected ownership/capability metadata. Bound archive size, expanded size, file count and nesting.</li>
+<li><strong>Transactions:</strong> do not run arbitrary package scripts as root. Define narrowly typed integration actions, validate their inputs, log them, and test rollback after failures at every phase.</li>
+<li><strong>Supply chain:</strong> pin source revisions, verify checksums, record licenses and provenance, review patches, minimize build-time dependencies and publish reproducible-build comparisons when achievable.</li>
+<li><strong>Operations:</strong> protect CI with least-privilege permissions and immutable action pins. Security reports need a private disclosure route before a public release is announced.</li>
+</ul>
+<h2 id="release">Release gates: evidence before claims</h2>
+<ol>
+<li>Metadata parser and dependency solver: fuzzing, property tests, deterministic plans and malformed-input tests.</li>
+<li>Repository trust: signature verification, expired metadata, revoked keys, stale snapshots and rollback attacks tested with fixtures.</li>
+<li>Archive handling: hostile archives, path traversal, links, size bombs and conflicting files tested in an unprivileged temporary root.</li>
+<li>Transactions: interruption at every stage, disk-full handling, recovery, idempotence and preservation of the active generation.</li>
+<li>Boot and kernel: install/update/revert cycles on virtual machines and representative hardware; Secure Boot policy and kernel-module compatibility documented.</li>
+<li>Desktop integration: app launch, updates, permissions, portals, D-Bus, icons, fonts, locale, accessibility and multi-user behavior tested.</li>
+<li>Release candidate: clean install, upgrade from previous image, offline recovery, signed artifacts, SBOM/provenance, documented known issues and tested restore procedures.</li>
+</ol>
+<p>Kernel policy is release-specific. Consult <a href="https://kernel.org/">kernel.org</a> and select a supported stable kernel that has passed Deku's test matrix. Mainline kernels can be evaluated in a clearly labelled experimental channel with a fallback kernel and no implication of production support.</p>
+<h2>Primary sources</h2>
+<ul><li><a href="https://nix.dev/manual/nix/latest/">Nix manual</a></li><li><a href="https://docs.fedoraproject.org/">Fedora documentation</a></li><li><a href="https://bootc-dev.github.io/bootc/">bootc documentation</a></li><li><a href="https://docs.voidlinux.org/">Void Linux handbook</a></li><li><a href="https://docs.flatpak.org/">Flatpak documentation</a></li><li><a href="https://www.kernel.org/doc/html/latest/admin-guide/LSM/landlock.html">Linux Landlock documentation</a></li><li><a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a></li></ul>
+<p>Related project records: <a href="https://github.com/Deku-Foundation/deku-linux/blob/main/docs/architecture/adr-0002-package-build-security.md">package/build architecture proposal</a>, <a href="https://github.com/Deku-Foundation/deku-pkg">Rust package prototype</a>, <a href="../docs/">documentation index</a> and <a href="../roadmap/">roadmap</a>.</p>
+</article></div></section>
+</main>
+<footer class="site-footer"><div class="container footer-main"><a class="brand footer-brand" href="../"><img src="../assets/deku-mark.svg" width="32" height="32" alt=""><span class="brand-wordmark">Deku<span> Linux</span><small>FOUNDATION</small></span></a><p>An independent, open-source Linux distribution in development.</p><a class="footer-github" href="https://github.com/Deku-Foundation">GitHub ↗</a></div><div class="container footer-bottom"><span>© <span id="year">2026</span> Deku Foundation</span><span>Proposals are not release claims.</span></div></footer>
+</body></html>
