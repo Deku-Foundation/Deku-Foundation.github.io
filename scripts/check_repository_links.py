@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-STALE = "github.com/Deku-Foundation/project"
+STALE = "github.com/Deku-Foundation/" + "project"
 errors = []
 checked = 0
 for path in sorted(ROOT.rglob("*")):
