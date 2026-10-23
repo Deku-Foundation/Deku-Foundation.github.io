@@ -1,42 +1,59 @@
-# Deku Linux Website
+# Deku Linux website
 
-Public project website: https://deku-foundation.github.io/
+The public project website is a build-free static site hosted on GitHub Pages: <https://deku-foundation.github.io/>.
 
-## Design and structure
+## Languages
 
-The site is a lightweight, responsive static website hosted on GitHub Pages. Its custom visual system is designed for Deku rather than applying a third-party theme wholesale. It prioritizes clear project status, technical navigation, accessibility, mobile usability, and accurate release messaging.
+- English: `/`
+- French: `/fr/`
+- Arabic: `/ar/`
 
-- `index.html` — project landing page and roadmap overview
-- `about.html` — project scope and principles
-- `docs/` — documentation entry point
-- `install/` — release and installation status
-- `security/` — security posture and reporting guidance
-- `contribute/` — contribution guidance
-- `faq/` — project FAQs
-- `assets/styles.css` — shared responsive design system
-- `assets/main.js` — progressive enhancement for navigation and current year
-- `404.html` — branded not-found page
-- `sitemap.xml` and `robots.txt` — search-engine discovery
+The primary project pages are available in English, French and Arabic: overview, documentation, installation status, security, community, roadmap, development updates and FAQ. Arabic pages use `lang="ar"` and `dir="rtl"`. Each translated page should preserve the purpose and current status of its English counterpart without claiming features that are not implemented.
+
+## Structure
+
+- `index.html` — English project overview and roadmap summary.
+- `fr/` and `ar/` — translated page routes with equivalent information architecture.
+- `about.html` — project goals, current status and upstream reuse principles.
+- `docs/` — documentation landing page and website standards.
+- `install/` — release status; no official ISO download is advertised.
+- `security/` — security posture and reporting guidance.
+- `community/` — contribution channels and review expectations.
+- `roadmap/` — engineering milestones and testable exit criteria.
+- `updates/` — verified sources for ongoing repository changes.
+- `assets/styles.css` — green design tokens, responsive components, RTL rules and reduced-motion support.
+- `assets/main.js` — small progressive enhancement for the responsive navigation and current year.
+- `sitemap.xml` and `robots.txt` — search-engine discovery.
+- `.github/workflows/pages.yml` — local-link, document structure, language metadata, image alternative, JavaScript and deployment checks.
+
+## Design and implementation decisions
+
+The site remains static HTML, CSS and small JavaScript instead of introducing a framework build to GitHub Pages. This keeps deployment simple and removes a separate frontend dependency/build pipeline while the project is in its foundation stage. The design uses a Deku-owned evergreen palette, system-font stacks, local SVG branding, semantic HTML, visible keyboard focus, skip links, language-prefixed routes and logical CSS properties for RTL.
+
+The design principles are informed by open systems including [GitHub Primer](https://primer.github.io/design/), [Astro/Starlight i18n](https://starlight.astro.build/guides/i18n/), the [GOV.UK Design System](https://design-system.service.gov.uk/) and [WCAG 2.2](https://www.w3.org/TR/WCAG22/). No code, fonts or brand artwork are copied from these projects. See [Website design and quality standards](docs/website-standards.html).
 
 ## Local preview
 
-This site intentionally avoids a framework build step. Serve the repository root with any static HTTP server, then open the local address in a browser. For example:
+Serve the repository root with any static HTTP server:
 
 ```sh
 python3 -m http.server 8000
 ```
 
-Open `http://localhost:8000/`.
+Open <http://localhost:8000/>.
 
-## Quality checklist
+No npm install or compilation step is required.
 
-- Check every page at mobile and desktop widths.
-- Navigate by keyboard and verify visible focus indicators and the skip link.
-- Test mobile navigation with keyboard, pointer, and Escape.
-- Verify internal links and ensure release statements match actual project state.
-- Confirm sitemap URLs and metadata before changing the public domain.
-- Do not publish fake download links, release dates, ratings, or security claims.
+## Validation and release process
 
-## Release status
+Pull requests run the website validation workflow. The deploy job is gated to a push to the default branch after validation succeeds and receives Pages permissions only in that job. A successful pull-request check is not proof that production deployment completed; verify the default-branch deployment and the published URL separately.
 
-Deku Linux remains in development. The website does not provide an official ISO download because no release artifact has been approved for publication.
+Before merge, review local links and language routes, run the GitHub Actions checks, and inspect the English, French and Arabic pages at desktop and mobile widths. Manual review must include keyboard-only navigation, visible focus, zoom, reduced motion, Arabic text direction, mixed Arabic/English technical terms and actual language-switch targets.
+
+## Public-status rule
+
+Deku Linux is still in development. The website must not advertise a download, version, release date, security certification, performance figure or feature as shipped unless an actual artifact and evidence support the claim. The package manager, build system and installer remain prototypes; there is no official ISO release.
+
+## Contribution
+
+Small, reviewable improvements are preferred. Follow the project’s contribution process in the main [project repository](https://github.com/Deku-Foundation/project/blob/main/CONTRIBUTING.md). Translation changes should be reviewed for meaning and technical terminology, not merely for matching word count.
