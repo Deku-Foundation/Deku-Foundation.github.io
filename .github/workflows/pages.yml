@@ -265,6 +265,57 @@ jobs:
               sys.exit(1)
           print(f"Validated {len(sitemap_urls)} sitemap URLs and canonical/hreflang metadata for {len(html_files)} HTML pages.")
           PY
+      - name: Require localized updates navigation on every public page
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import sys
+
+          class Navigation(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.lang = None
+                  self.in_nav = False
+                  self.nav_depth = 0
+                  self.nav_text = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if tag == "html":
+                      self.lang = attrs.get("lang")
+                  if tag == "nav" and attrs.get("id") == "primary-nav":
+                      self.in_nav = True
+                      self.nav_depth = 1
+                  elif self.in_nav and tag == "nav":
+                      self.nav_depth += 1
+                  if self.in_nav and tag == "a":
+                      self.nav_text.append(" ")
+              def handle_endtag(self, tag):
+                  if self.in_nav and tag == "nav":
+                      self.nav_depth -= 1
+                      if self.nav_depth == 0:
+                          self.in_nav = False
+              def handle_data(self, data):
+                  if self.in_nav:
+                      self.nav_text.append(data)
+
+          labels = {"en": "Updates", "fr": "Mises à jour", "ar": "التحديثات"}
+          errors = []
+          pages = sorted(path for path in Path(".").rglob("*.html") if path.name != "404.html" and ".git" not in path.parts)
+          for page in pages:
+              parser = Navigation()
+              parser.feed(page.read_text(encoding="utf-8"))
+              expected = labels.get(parser.lang)
+              text = " ".join(" ".join(parser.nav_text).split())
+              if not expected:
+                  errors.append(f"{page}: unsupported language for primary navigation: {parser.lang!r}")
+              elif expected not in text:
+                  errors.append(f"{page}: primary navigation is missing localized updates link {expected!r}")
+          if errors:
+              print("\\n".join(errors))
+              sys.exit(1)
+          print(f"Validated localized updates navigation on {len(pages)} public HTML pages.")
+          PY
       - name: Check JavaScript syntax
         run: node --check assets/main.js
 
