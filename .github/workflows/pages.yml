@@ -139,6 +139,8 @@ jobs:
               sys.exit(1)
           print(f"Validated {len(files)} HTML files for local links, language metadata, unique IDs, image alternatives and core document structure.")
           PY
+      - name: Validate sitemap URLs and language alternates
+        run: python3 scripts/check_sitemap.py
       - name: Check JavaScript syntax
         run: node --check assets/main.js
 
