@@ -28,6 +28,9 @@ jobs:
           test -s assets/styles.css
           test -s assets/main.js
           test -s assets/deku-mark.svg
+          test -s 404.html
+          test -s robots.txt
+          test -s sitemap.xml
           python3 - <<'PY'
           from html.parser import HTMLParser
           from pathlib import Path
@@ -58,7 +61,15 @@ jobs:
           if errors:
               print("\n".join(errors))
               sys.exit(1)
-          print(f"Validated local links in {len(files)} HTML files.")
+          for file in files:
+              text = file.read_text(encoding="utf-8")
+              for required in ('<html lang="en"', "<title>", 'name="description"'):
+                  if required not in text:
+                      errors.append(f"{file}: missing required document metadata {required}")
+          if errors:
+              print("\\n".join(errors))
+              sys.exit(1)
+          print(f"Validated local links and basic metadata in {len(files)} HTML files.")
           PY
       - name: Check JavaScript syntax
         run: node --check assets/main.js
