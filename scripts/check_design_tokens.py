@@ -131,7 +131,7 @@ def main() -> int:
                 value = property_value(block, name)
                 if not value:
                     continue
-                match = re.search(r"(?<![\\w.])([0-9]+(?:\\.[0-9]+)?)px", value)
+                match = re.search(r"(?<![\w.])([0-9]+(?:\.[0-9]+)?)px", value)
                 if not match:
                     continue
                 size = float(match.group(1))
