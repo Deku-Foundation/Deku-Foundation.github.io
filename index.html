@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#12372a">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Deku Linux is an independent Linux distribution under active development. Explore its architecture, package system, security approach, documentation and open roadmap.">
+  <meta name="description" content="Deku Linux is an early-stage Linux distribution. Follow its package manager, build tooling, installer and engineering roadmap in public repositories.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Deku Linux">
-  <meta property="og:title" content="Deku Linux — Built in the open">
+  <meta property="og:title" content="Deku Linux — A distribution in development">
   <meta property="og:description" content="An independent Linux distribution built through careful engineering, explicit security boundaries and open development.">
   <meta property="og:url" content="https://deku-foundation.github.io/">
   <meta name="twitter:card" content="summary">
@@ -34,14 +34,7 @@
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
         <span class="sr-only">Open navigation</span><span></span><span></span>
       </button>
-      <nav id="primary-nav" class="primary-nav" aria-label="Main navigation">
-        <a href="#platform">Platform</a>
-        <a href="docs/">Documentation</a>
-        <a href="roadmap/">Roadmap</a><a href="updates/" lang="en">Updates</a>
-        <a href="community/">Community</a>
-        <a href="security/">Security</a>
-        <a class="nav-download" href="install/">Release status</a>
-      </nav>
+      <nav id="primary-nav" class="primary-nav" aria-label="Main navigation"><a href="architecture/">Architecture</a><a href="docs/">Documentation</a><a href="updates/">Updates</a><a href="development/">Engineering</a><a href="community/">Community</a><a href="security/">Security</a><a href="install/">Release status</a></nav>
       <div class="language-switch" aria-label="Choose language">
         <a href="./" aria-current="page" lang="en">EN</a>
         <a href="fr/" lang="fr">FR</a>
@@ -56,13 +49,13 @@
       <div class="container hero-layout">
         <div class="hero-copy">
           <p class="eyebrow"><span class="eyebrow-line"></span> An independent Linux project</p>
-          <h1>Build a system.<br><span>Earn the trust.</span></h1>
-          <p class="hero-lede">Deku Linux is being developed in public, one verified layer at a time. The goal is a dependable desktop system with a clear software path, careful security boundaries and maintenance that people can inspect.</p>
+          <h1>A Linux desktop.<br><span>In development.</span></h1>
+          <p class="hero-lede">Deku Linux is in an early development stage. Current work covers a Rust package metadata and dependency planner, bounded build-plan validation, and a non-destructive installer planner. No installable ISO is available.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="docs/">Explore the platform <span aria-hidden="true">↗</span></a>
-            <a class="button button-outline" href="https://github.com/Deku-Foundation/deku-linux" target="_blank" rel="noopener noreferrer">Follow development <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="architecture/">Read the architecture <span aria-hidden="true">↗</span></a>
+            <a class="button button-outline" href="development/">Browse the repositories <span aria-hidden="true">↗</span></a>
           </div>
-          <div class="hero-state"><span class="state-marker"></span><div><strong>Foundation phase</strong><span>Package, build and installation foundations are being prototyped. No release image has been published.</span></div></div>
+          <div class="hero-state"><span class="state-marker"></span><div><strong>Prototype stage</strong><span>The package manager, build validator and installer planner are not production tools. No install image has been released.</span></div></div>
         </div>
         <div class="architecture-art" aria-label="Overview of the Deku Linux architecture">
           <div class="art-heading"><span>DEKU / SYSTEM MAP</span><span class="art-heading-dot"></span></div>

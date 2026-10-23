@@ -17,8 +17,10 @@ The primary project pages are available in English, French and Arabic: overview,
 - `about.html` — project goals, current status and upstream reuse principles.
 - `docs/` — documentation landing page and website standards.
 - `architecture/` — evidence-led system design in English, French and Arabic, covering upstream lessons, compatibility limits, immutable storage, recovery and security.
+- `development/`, `fr/development/`, `ar/development/` — a multilingual engineering hub for repositories, issues, pull requests, Actions, contribution workflow and the current limits of GitHub’s discussion/project features.
 - `fr/docs/website-standards/` and `ar/docs/website-standards/` — localized website quality standards.
 - `scripts/check_sitemap.py` — dependency-free checks for sitemap targets and language alternates.
+- `scripts/check_design_tokens.py` — targeted WCAG contrast-ratio and minimum microtype regression checks for selected text pairs.
 - `install/` — release status; no official ISO download is advertised.
 - `security/` — security posture and reporting guidance.
 - `community/` — contribution channels and review expectations.
@@ -33,7 +35,7 @@ The primary project pages are available in English, French and Arabic: overview,
 
 The site remains static HTML, CSS and small JavaScript instead of introducing a framework build to GitHub Pages. This keeps deployment simple and removes a separate frontend dependency/build pipeline while the project is in its foundation stage. The design uses a Deku-owned evergreen palette, system-font stacks, local SVG branding, semantic HTML, visible keyboard focus, skip links, language-prefixed routes and logical CSS properties for RTL.
 
-The design principles are informed by open systems including [GitHub Primer](https://primer.github.io/design/), [Astro/Starlight i18n](https://starlight.astro.build/guides/i18n/), the [GOV.UK Design System](https://design-system.service.gov.uk/) and [WCAG 2.2](https://www.w3.org/TR/WCAG22/). No code, fonts or brand artwork are copied from these projects. See [Website design and quality standards](docs/website-standards.html).
+The design principles are informed by open systems including [GitHub Primer](https://primer.style/product/getting-started/foundations/), [Astro/Starlight i18n](https://starlight.astro.build/guides/i18n/), the [GOV.UK Design System](https://design-system.service.gov.uk/) and [WCAG 2.2](https://www.w3.org/TR/WCAG22/). No code, fonts or brand artwork are copied from these projects. See [Website design and quality standards](docs/website-standards.html) for the October 2026 design review and its limits.
 
 ## Local preview
 
