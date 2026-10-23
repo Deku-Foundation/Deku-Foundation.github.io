@@ -2,6 +2,14 @@
 
 The public website is a build-free static site for Deku Foundation, an independent multi-project open-source engineering organization: <https://deku-foundation.github.io/>. Deku Linux is the first platform project; the foundation also publishes language research and cross-project engineering practices.
 
+## Governance and contribution
+
+- [Contributing](CONTRIBUTING.md) — the shared `dev` → `main` review and validation workflow.
+- [Engineering workflow](ENGINEERING_WORKFLOW.md) — branch lifecycle, CI expectations, and honest release claims.
+- [Governance](GOVERNANCE.md) — decision records, repository responsibilities, and transparent project status.
+- [Security policy](SECURITY.md) — vulnerability reporting and security engineering priorities.
+- [Code of conduct](CODE_OF_CONDUCT.md) — expected behavior and private reporting of conduct concerns.
+
 ## Languages
 
 - English: `/`
