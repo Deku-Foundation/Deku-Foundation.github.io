@@ -1,4 +1,4 @@
-name: Website checks and deploy
+name: Website validation and deployment
 
 on:
   push:
@@ -15,12 +15,12 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate static website
+    name: Validate site structure and accessibility basics
     runs-on: ubuntu-latest
     steps:
       - name: Check out source
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: Check required files and local links
+      - name: Check required site files, locale metadata and local links
         shell: bash
         run: |
           set -euo pipefail
@@ -37,39 +37,105 @@ jobs:
           from urllib.parse import urlparse
           import sys
 
+          ROOT = Path(".").resolve()
+          ALLOWED_LANGS = {"en", "fr", "ar"}
+
           class Check(HTMLParser):
               def __init__(self, file):
                   super().__init__(convert_charrefs=True)
                   self.file = file
                   self.errors = []
+                  self.lang = None
+                  self.direction = None
+                  self.title_seen = False
+                  self.description_seen = False
+                  self.h1_count = 0
+                  self.ids = set()
+                  self.duplicate_ids = set()
+                  self.local_refs = []
+
               def handle_starttag(self, tag, attrs):
                   attrs = dict(attrs)
+                  if tag == "html":
+                      self.lang = attrs.get("lang")
+                      self.direction = attrs.get("dir", "ltr")
+                  if tag == "title":
+                      self.title_seen = True
+                  if tag == "meta" and attrs.get("name", "").lower() == "description":
+                      self.description_seen = bool(attrs.get("content", "").strip())
+                  if tag == "h1":
+                      self.h1_count += 1
+                  if "id" in attrs:
+                      identifier = attrs["id"]
+                      if identifier in self.ids:
+                          self.duplicate_ids.add(identifier)
+                      self.ids.add(identifier)
+                  if tag == "img" and "alt" not in attrs:
+                      self.errors.append(f"{self.file}: image is missing an alt attribute")
+
                   for key in ("href", "src"):
                       value = attrs.get(key, "")
-                      if not value or value.startswith(("#", "https://", "http://", "mailto:", "tel:", "data:", "javascript:")):
+                      if not value:
+                          if key == "src":
+                              self.errors.append(f"{self.file}: empty src attribute")
                           continue
-                      path = (self.file.parent / urlparse(value).path).resolve()
-                      if not path.exists():
-                          self.errors.append(f"{self.file}: missing {key} target {value}")
+                      parsed = urlparse(value)
+                      if parsed.scheme:
+                          if parsed.scheme.lower() not in {"https", "http", "mailto", "tel", "data"}:
+                              self.errors.append(f"{self.file}: unsupported URL scheme in {key}: {value}")
+                          continue
+                      if value.startswith("//"):
+                          continue
+                      if not parsed.path:
+                          if parsed.fragment:
+                              self.local_refs.append((self.file, parsed.fragment))
+                          continue
+                      target = (self.file.parent / parsed.path).resolve()
+                      if ROOT not in target.parents and target != ROOT:
+                          self.errors.append(f"{self.file}: local {key} escapes repository: {value}")
+                          continue
+                      if target.is_dir():
+                          target_file = target / "index.html"
+                      else:
+                          target_file = target
+                      if not target.exists() or (target.is_dir() and not target_file.is_file()):
+                          self.errors.append(f"{self.file}: missing local {key} target {value}")
+                          continue
+                      if parsed.fragment and target_file.suffix.lower() == ".html":
+                          self.local_refs.append((target_file, parsed.fragment))
 
-          files = sorted(Path(".").rglob("*.html"))
+          files = sorted(path for path in ROOT.rglob("*.html") if ".git" not in path.parts)
+          checks = {}
           errors = []
           for file in files:
               checker = Check(file)
               checker.feed(file.read_text(encoding="utf-8"))
+              checks[file.resolve()] = checker
               errors.extend(checker.errors)
+              if checker.lang not in ALLOWED_LANGS:
+                  errors.append(f"{file}: html lang must be one of {sorted(ALLOWED_LANGS)}")
+              if checker.lang == "ar" and checker.direction != "rtl":
+                  errors.append(f"{file}: Arabic documents must set dir=rtl on the html element")
+              if not checker.title_seen:
+                  errors.append(f"{file}: missing title")
+              if not checker.description_seen:
+                  errors.append(f"{file}: missing meta description")
+              if checker.h1_count != 1:
+                  errors.append(f"{file}: expected exactly one h1, found {checker.h1_count}")
+              for identifier in sorted(checker.duplicate_ids):
+                  errors.append(f"{file}: duplicate id {identifier!r}")
+          for source, fragment in Check.__dict__.get("_unused", []):
+              pass
+          for file, fragment in (ref for checker in checks.values() for ref in checker.local_refs):
+              checker = checks.get(file.resolve())
+              if checker and fragment not in checker.ids:
+                  errors.append(f"{file}: missing local fragment #{fragment}")
+          if not files:
+              errors.append("No HTML files found")
           if errors:
               print("\n".join(errors))
               sys.exit(1)
-          for file in files:
-              text = file.read_text(encoding="utf-8")
-              for required in ('<html lang="en"', "<title>", 'name="description"'):
-                  if required not in text:
-                      errors.append(f"{file}: missing required document metadata {required}")
-          if errors:
-              print("\\n".join(errors))
-              sys.exit(1)
-          print(f"Validated local links and basic metadata in {len(files)} HTML files.")
+          print(f"Validated {len(files)} HTML files for local links, language metadata, unique IDs, image alternatives and core document structure.")
           PY
       - name: Check JavaScript syntax
         run: node --check assets/main.js
