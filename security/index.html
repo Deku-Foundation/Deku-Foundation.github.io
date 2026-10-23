@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f5"><meta name="description" content="Deku aims to make security properties reviewable through source provenance, least privilege, isolated builds, clear reporting channels, and verifiable releases.">
+  <title>Security — Deku Linux</title><link rel="icon" type="image/svg+xml" href="../assets/deku-mark.svg">
+  <link rel="stylesheet" href="../assets/styles.css"><script src="../assets/main.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="container nav-wrap">
+<a class="brand" href="../" aria-label="Deku Linux home"><img src="../assets/deku-mark.svg" width="36" height="36" alt=""><span>Deku<span class="brand-light"> Linux</span></span></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">Toggle navigation</span><span></span><span></span></button>
+<nav id="primary-nav" class="primary-nav" aria-label="Primary navigation"><a href="../about.html">About</a><a href="../#roadmap">Roadmap</a><a href="../docs/">Documentation</a><a href="../security/">Security</a><a class="nav-github" href="https://github.com/Deku-Foundation" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a></nav>
+</div></header>
+<main id="main">
+<section class="inner-hero"><div class="container"><p class="eyebrow">04 / Security</p><h1>Security is a process, not a badge.</h1><p class="lede">Deku aims to make security properties reviewable through source provenance, least privilege, isolated builds, clear reporting channels, and verifiable releases.</p></div></section>
+<section class="content-section"><div class="container content-layout">
+<nav class="content-nav" aria-label="On this page"><strong>Explore Deku</strong><a href="../about.html">About the project</a><a href="../docs/">Documentation</a><a href="../install/">Installation status</a><a href="../security/">Security</a><a href="../contribute/">Contributing</a><a href="../faq/">FAQ</a><a href="../#roadmap">Roadmap</a><a href="https://github.com/Deku-Foundation/project">Project repository ↗</a></nav>
+<article class="prose">
+<h2>Current security posture</h2><p>The project is in development. A threat model and security policy are being developed, but the distribution has not undergone a release-level security audit. Do not interpret the goals on this page as proof that an unreleased system is secure.</p>
+<div class="notice">Do not send credentials, private keys, access tokens, or exploit details in public issues. Use the reporting instructions in the project security policy.</div>
+<h2>Engineering priorities</h2><ul><li><strong>Source provenance:</strong> pin upstream source revisions and verify downloaded source artifacts.</li><li><strong>Dependency review:</strong> review licenses, maintainers, known vulnerabilities, and update paths.</li><li><strong>Build isolation:</strong> reduce ambient host access and record the inputs and logs for builds.</li><li><strong>Least privilege:</strong> separate CI validation, artifact building, signing, and publication permissions.</li><li><strong>Release integrity:</strong> publish checksums and cryptographic signatures only when a real release pipeline exists.</li><li><strong>Vulnerability handling:</strong> provide a clear private reporting path, triage process, and coordinated disclosure policy.</li></ul>
+<h2>Security policy and threat model</h2><p>Read the project’s <a href="https://github.com/Deku-Foundation/project/blob/main/SECURITY.md">security policy ↗</a> and <a href="https://github.com/Deku-Foundation/project/blob/main/docs/security/threat-model.md">threat model ↗</a>. These documents describe intended process and assumptions; they are not an audit certificate.</p>
+<h2>Report a vulnerability</h2><p>Use GitHub’s private vulnerability reporting feature for the relevant repository if it is enabled. Otherwise, consult the current security policy for the supported contact route. Avoid filing exploitable details publicly before maintainers can assess the report.</p>
+<h2>Transparency</h2><p>Known limitations, release blockers, and material security changes should be documented in public project records when disclosure is safe and appropriate.</p></article>
+</div></section>
+</main>
+<footer class="site-footer"><div class="container footer-main"><a class="brand footer-brand" href="../"><img src="../assets/deku-mark.svg" width="32" height="32" alt=""><span>Deku<span class="brand-light"> Linux</span></span></a><p>An independent, open-source Linux distribution in development.</p><a class="footer-github" href="https://github.com/Deku-Foundation">GitHub ↗</a></div><div class="container footer-bottom"><span>© <span id="year">2026</span> Deku Foundation</span><span>Made in the open. No release claims without evidence.</span></div></footer>
+</body></html>

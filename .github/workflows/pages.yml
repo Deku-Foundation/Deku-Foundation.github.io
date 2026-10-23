@@ -1,0 +1,89 @@
+name: Website checks and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate static website
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Check required files and local links
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s index.html
+          test -s assets/styles.css
+          test -s assets/main.js
+          test -s assets/deku-mark.svg
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import sys
+
+          class Check(HTMLParser):
+              def __init__(self, file):
+                  super().__init__(convert_charrefs=True)
+                  self.file = file
+                  self.errors = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  for key in ("href", "src"):
+                      value = attrs.get(key, "")
+                      if not value or value.startswith(("#", "https://", "http://", "mailto:", "tel:", "data:", "javascript:")):
+                          continue
+                      path = (self.file.parent / urlparse(value).path).resolve()
+                      if not path.exists():
+                          self.errors.append(f"{self.file}: missing {key} target {value}")
+
+          files = sorted(Path(".").rglob("*.html"))
+          errors = []
+          for file in files:
+              checker = Check(file)
+              checker.feed(file.read_text(encoding="utf-8"))
+              errors.extend(checker.errors)
+          if errors:
+              print("\n".join(errors))
+              sys.exit(1)
+          print(f"Validated local links in {len(files)} HTML files.")
+          PY
+      - name: Check JavaScript syntax
+        run: node --check assets/main.js
+
+  deploy:
+    name: Publish to GitHub Pages
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        with:
+          path: .
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
