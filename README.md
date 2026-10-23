@@ -1,6 +1,6 @@
-# Deku Linux website
+# Deku Foundation website
 
-The public project website is a build-free static site hosted on GitHub Pages: <https://deku-foundation.github.io/>.
+The public website is a build-free static site for Deku Foundation, an independent multi-project open-source engineering organization: <https://deku-foundation.github.io/>. Deku Linux is the first platform project; the foundation also publishes language research and cross-project engineering practices.
 
 ## Languages
 
@@ -12,10 +12,10 @@ The primary project pages are available in English, French and Arabic: overview,
 
 ## Structure
 
-- `index.html` — English project overview and roadmap summary.
+- `index.html`, `fr/index.html` and `ar/index.html` — the foundation-wide portfolio landing page in English, French and Arabic.
 - `ecosystem/`, `fr/ecosystem/` and `ar/ecosystem/` — a multilingual directory for the seven core repositories, project information areas and contribution routes.
 - `fr/` and `ar/` — translated page routes with equivalent information architecture.
-- `about.html` — project goals, current status and upstream reuse principles.
+- `about.html`, `fr/about/` and `ar/about/` — foundation mission, current portfolio, upstream-first principles and the research/prototype/release workflow.
 - `docs/` — documentation landing page and website standards.
 - `architecture/` — evidence-led system design in English, French and Arabic, covering upstream lessons, compatibility limits, immutable storage, recovery and security.
 - `development/`, `fr/development/`, `ar/development/` — a multilingual engineering hub for repositories, issues, pull requests, Actions, contribution workflow and the current limits of GitHub’s discussion/project features.
@@ -34,9 +34,9 @@ The primary project pages are available in English, French and Arabic: overview,
 
 ## Design and implementation decisions
 
-The site remains static HTML, CSS and small JavaScript instead of introducing a framework build to GitHub Pages. This keeps deployment simple and removes a separate frontend dependency/build pipeline while the project is in its foundation stage. The design uses a Deku-owned evergreen palette, system-font stacks, local SVG branding, semantic HTML, visible keyboard focus, skip links, language-prefixed routes and logical CSS properties for RTL.
+The published site remains static HTML, CSS and small JavaScript. An experimental `site-v2` Docusaurus scaffold was not promoted: it lacked a complete translation/content/assets set and validated production build. Keep the known-good static pipeline until a migration demonstrates stable dependencies, complete EN/FR/AR coverage, equivalent SEO/accessibility and green build checks. The design uses a Deku-owned evergreen palette, system-font stacks, local SVG branding, semantic HTML, visible keyboard focus, skip links, language-prefixed routes and logical CSS properties for RTL.
 
-The design principles are informed by open systems including [GitHub Primer](https://primer.style/product/getting-started/foundations/), [Astro/Starlight i18n](https://starlight.astro.build/guides/i18n/), the [GOV.UK Design System](https://design-system.service.gov.uk/) and [WCAG 2.2](https://www.w3.org/TR/WCAG22/). No code, fonts or brand artwork are copied from these projects. See [Website design and quality standards](docs/website-standards.html) for the October 2026 design review and its limits.
+The design principles are informed by established open systems including [GitHub Primer](https://primer.style/product/getting-started/foundations/), [Astro/Starlight i18n](https://starlight.astro.build/guides/i18n/), the [GOV.UK Design System](https://design-system.service.gov.uk/) and [WCAG 2.2](https://www.w3.org/TR/WCAG22/). No code, fonts or brand artwork are copied from these projects. See [Website design and quality standards](docs/website-standards.html) for the October 2026 design review and its limits.
 
 ## Local preview
 
