@@ -74,10 +74,11 @@ jobs:
                       self.errors.append(f"{self.file}: image is missing an alt attribute")
 
                   for key in ("href", "src"):
-                      value = attrs.get(key, "")
-                      if not value:
-                          if key == "src":
-                              self.errors.append(f"{self.file}: empty src attribute")
+                      if key not in attrs:
+                          continue
+                      value = attrs[key]
+                      if not value.strip():
+                          self.errors.append(f"{self.file}: empty {key} attribute")
                           continue
                       parsed = urlparse(value)
                       if parsed.scheme:
@@ -124,8 +125,6 @@ jobs:
                   errors.append(f"{file}: expected exactly one h1, found {checker.h1_count}")
               for identifier in sorted(checker.duplicate_ids):
                   errors.append(f"{file}: duplicate id {identifier!r}")
-          for source, fragment in Check.__dict__.get("_unused", []):
-              pass
           for file, fragment in (ref for checker in checks.values() for ref in checker.local_refs):
               checker = checks.get(file.resolve())
               if checker and fragment not in checker.ids:
