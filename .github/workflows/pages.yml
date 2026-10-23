@@ -323,6 +323,8 @@ jobs:
           PY
       - name: Validate sitemap URLs and language alternates
         run: python3 scripts/check_sitemap.py
+      - name: Reject obsolete repository links
+        run: python3 scripts/check_repository_links.py
       - name: Check JavaScript syntax
         run: node --check assets/main.js
 
