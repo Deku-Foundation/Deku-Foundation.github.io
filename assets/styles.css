@@ -531,7 +531,10 @@ html[dir="rtl"] .layer-number, html[dir="rtl"] .platform-row-number, html[dir="r
   border-radius: 6px;
   background: #fff;
   color: var(--ink);
-  font: 700 12px/1.2 inherit;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
   cursor: pointer;
 }
 .ecosystem-filter[aria-pressed="true"] { border-color: var(--green-deep); background: var(--green-deep); color: #fff; }
