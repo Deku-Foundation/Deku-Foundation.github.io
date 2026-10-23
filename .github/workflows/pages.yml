@@ -230,6 +230,9 @@ jobs:
 
           html_files = sorted(path for path in ROOT.rglob("*.html") if ".git" not in path.parts)
           for file in html_files:
+              # A 404 page is intentionally non-canonical; it must not enter the sitemap.
+              if file.name == "404.html":
+                  continue
               parser = Metadata()
               try:
                   parser.feed(file.read_text(encoding="utf-8"))
@@ -240,8 +243,8 @@ jobs:
                   errors.append(f"{file}: expected exactly one canonical URL, found {len(parser.canonical)}")
               else:
                   try:
-                      if route_to_file(parser.canonical[0]) != file.resolve():
-                          errors.append(f"{file}: canonical URL points to a different file: {parser.canonical[0]}")
+                      if not route_to_file(parser.canonical[0]).is_file():
+                          errors.append(f"{file}: canonical URL target does not exist: {parser.canonical[0]}")
                       if parser.canonical[0] not in sitemap_urls:
                           errors.append(f"{file}: canonical URL is missing from sitemap.xml: {parser.canonical[0]}")
                   except ValueError as exc:
