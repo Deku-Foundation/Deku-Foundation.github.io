@@ -18,6 +18,24 @@
     <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/"/>
   </url>
+  <url><loc>https://deku-foundation.github.io/ecosystem/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/ecosystem/"/>
+  </url>
+  <url><loc>https://deku-foundation.github.io/fr/ecosystem/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/ecosystem/"/>
+  </url>
+  <url><loc>https://deku-foundation.github.io/ar/ecosystem/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://deku-foundation.github.io/ar/ecosystem/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deku-foundation.github.io/ecosystem/"/>
+  </url>
   <url><loc>https://deku-foundation.github.io/about.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://deku-foundation.github.io/about.html"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://deku-foundation.github.io/fr/about/"/>

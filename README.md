@@ -13,6 +13,7 @@ The primary project pages are available in English, French and Arabic: overview,
 ## Structure
 
 - `index.html` — English project overview and roadmap summary.
+- `ecosystem/`, `fr/ecosystem/` and `ar/ecosystem/` — a multilingual directory for the seven core repositories, project information areas and contribution routes.
 - `fr/` and `ar/` — translated page routes with equivalent information architecture.
 - `about.html` — project goals, current status and upstream reuse principles.
 - `docs/` — documentation landing page and website standards.
