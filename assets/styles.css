@@ -274,7 +274,7 @@ button { font: inherit; }
   .brand { gap: 7px; }
   .brand img { width: 34px; height: 34px; }
   .brand-wordmark { font-size: 15px; }
-  .brand-wordmark small { font-size: 7px; }
+  .brand-wordmark small { font-size: 10px; }
   .menu-toggle { width: 38px; height: 38px; }
   .nav-github { display: none; }
   .language-switch { gap: 0; padding: 2px; }
@@ -296,7 +296,7 @@ button { font: inherit; }
   .art-layer { min-height: 51px; grid-template-columns: 25px 1fr 18px; padding: 7px 9px; }
   .art-layer strong { font-size: 10px; }
   .art-layer small { font-size: 10px; }
-  .art-footer { font-size: 7px; letter-spacing: .5px; }
+  .art-footer { font-size: 10px; letter-spacing: .5px; }
   .hero-bottom { margin-top: 27px; gap: 8px; font-size: 10px; }
   .hero-bottom-rule { width: 13px; }
   .proof-grid { grid-template-columns: 1fr 1fr; }
