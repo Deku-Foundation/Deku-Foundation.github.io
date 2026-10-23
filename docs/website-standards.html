@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12372a"><meta name="description" content="The design decisions, accessibility requirements, multilingual routing and publication standards behind the Deku Linux website.">
+  <link rel="canonical" href="https://deku-foundation.github.io/docs/website-standards.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/deku-mark.svg"><link rel="stylesheet" href="../assets/styles.css"><script src="../assets/main.js" defer></script>
+  <title>Website design and quality standards — Deku Linux</title>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="container nav-wrap">
+<a class="brand" href="../" aria-label="Deku Linux home"><img src="../assets/deku-mark.svg" width="40" height="40" alt=""><span class="brand-wordmark">Deku<span> Linux</span><small>FOUNDATION</small></span></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">Open navigation</span><span></span><span></span></button>
+<nav id="primary-nav" class="primary-nav" aria-label="Main navigation"><a href="../#platform">Platform</a><a href="./">Documentation</a><a href="../roadmap/">Roadmap</a><a href="../community/">Community</a><a href="../security/">Security</a><a href="../install/">Release status</a></nav>
+<div class="language-switch" aria-label="Choose language"><a href="./website-standards.html" lang="en" aria-current="page">EN</a><a href="../fr/docs/" lang="fr">FR</a><a href="../ar/docs/" lang="ar" dir="rtl">ع</a></div>
+<a class="nav-github" href="https://github.com/Deku-Foundation/Deku-Foundation.github.io" target="_blank" rel="noopener noreferrer">Website source ↗</a>
+</div></header>
+<main id="main">
+<section class="inner-hero"><div class="container"><p class="eyebrow">Website / Engineering notes</p><h1>A design system built for clarity, access and long-term maintenance.</h1><p class="lede">The website is part of the project’s engineering surface. It should explain real project status, stay accessible across devices and languages, and remain easy to build and review.</p></div></section>
+<section class="content-section"><div class="container content-layout">
+<nav class="content-nav" aria-label="Website standards"><strong>Website standards</strong><a href="../">Homepage</a><a href="./">Documentation</a><a href="../community/">Community</a><a href="../roadmap/">Roadmap</a><a href="../security/">Security</a></nav>
+<article class="prose">
+<h2>Technology choice: static first</h2>
+<p>The production site remains dependency-free HTML, CSS and small progressive-enhancement JavaScript. GitHub Pages can publish the source directly, so a framework build is not a prerequisite for changing content. This avoids an extra supply-chain and build layer while the project’s publication process is still taking shape.</p>
+<p>The trade-off is explicit: multilingual pages are authored as static route counterparts, with a small amount of duplicated structure. If the number of locales and pages makes this difficult to maintain, evaluate a generator such as Astro with Starlight before introducing it. A migration should demonstrate simpler translation workflows, tested fallback behaviour and equivalent output—not merely add a modern tool.</p>
+
+<h2>Design references and what Deku takes from them</h2>
+<ul>
+<li><strong>GitHub Primer:</strong> use a coherent set of colour, spacing, typography and component tokens; keep focus states, controls and link behaviour consistent. The site uses its own green identity and does not copy Primer code or branding. <a href="https://primer.github.io/design/" target="_blank" rel="noopener noreferrer">Primer design system ↗</a></li>
+<li><strong>Astro i18n and Starlight:</strong> use stable language-prefixed routes, equivalent pages across locales, explicit language tags and an RTL setting for Arabic. The current static site follows those routing principles without adopting a build framework. <a href="https://starlight.astro.build/guides/i18n/" target="_blank" rel="noopener noreferrer">Starlight internationalisation ↗</a></li>
+<li><strong>GOV.UK Design System:</strong> make navigation, content structure, language labels and common page patterns consistent; state what the user can do next and avoid inflated wording. Deku uses the clarity principles, not a government visual theme. <a href="https://design-system.service.gov.uk/" target="_blank" rel="noopener noreferrer">GOV.UK Design System ↗</a></li>
+<li><strong>WCAG 2.2:</strong> treat keyboard operation, visible focus, contrast, reduced motion, semantic landmarks and meaningful alternative text as implementation requirements. Automated checks help find regressions but do not establish full conformance. <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">WCAG 2.2 ↗</a></li>
+</ul>
+
+<h2>Visual system</h2>
+<ul>
+<li>Evergreen and leaf green identify Deku; neutral paper and white surfaces support long reading. Colour is not the sole way to signal status.</li>
+<li>Reusable CSS variables define colour, spacing, widths, borders, radius and elevation. Avoid one-off decorative styles without a content or interaction purpose.</li>
+<li>Use a system-font stack and local SVG marks. Do not add external font requests, tracking pixels, autoplay media or third-party JavaScript just to improve appearance.</li>
+<li>Use layout that prioritises the message and technical material over simulated metrics, fake testimonials, made-up release cards or generic marketing copy.</li>
+<li>Respect reduced-motion preferences, support small screens and keep long lines and dense navigation under control.</li>
+</ul>
+
+<h2>Language and right-to-left support</h2>
+<p>English is the default route; French lives under <code>/fr/</code> and Arabic under <code>/ar/</code>. Each page sets an accurate HTML <code>lang</code> value. Arabic pages set <code>dir="rtl"</code> on the root element and use CSS logical properties for inline and block spacing. Links use visible language names and remain usable without JavaScript.</p>
+<p>Equivalent pages should use canonical URLs and language alternates when the translation exists. Keep page structure equivalent, translate user-facing navigation and status text, and do not label untranslated content as translated. Native-language review is still recommended before claiming editorial translation quality.</p>
+
+<h2>Content standard: say only what the project can support</h2>
+<p>Write about shipped behaviour in the present tense only when code and tests support it. Label proposals as proposals, prototypes as prototypes, and missing features as not implemented. Never imply an ISO, security certification, package compatibility, deployment or release date without a verifiable artifact and evidence.</p>
+<p>Prefer short, precise statements. Explain the user consequence and the next step. Avoid stock phrases, repeated slogans, invented statistics, unsupported superlatives and generic filler that does not help someone make a decision.</p>
+
+<h2>Quality gates</h2>
+<ol>
+<li>Validate all local links and image targets; reject duplicate IDs and missing document metadata.</li>
+<li>Validate supported document languages and require <code>dir="rtl"</code> for Arabic.</li>
+<li>Check JavaScript syntax, language switch targets, canonical URLs and sitemap coverage in CI.</li>
+<li>Use keyboard-only navigation, visible focus, browser zoom, reduced motion and mobile widths in manual review.</li>
+<li>Inspect Arabic shaping, text direction, punctuation, English technical identifiers, code samples and mixed-direction links in a real browser.</li>
+<li>Confirm a successful default-branch Pages deployment and inspect the deployed site before calling it live.</li>
+</ol>
+<p>The automated workflow is a guard against known regressions, not a claim that every WCAG criterion has been audited. Accessibility and native-language review remain human tasks.</p>
+
+<h2>Source and deployment</h2>
+<p>The public source is <a href="https://github.com/Deku-Foundation/Deku-Foundation.github.io" target="_blank" rel="noopener noreferrer">Deku-Foundation.github.io ↗</a>. The Pages workflow separates pull-request validation from deployment and gives Pages permissions only to the deploy job. Do not include credentials or deployment secrets in source, logs or pull-request test jobs.</p>
+</article></div></section>
+</main>
+<footer class="site-footer"><div class="container footer-main"><div class="footer-brand-block"><a class="brand footer-brand" href="../"><img src="../assets/deku-mark.svg" width="36" height="36" alt=""><span class="brand-wordmark">Deku<span> Linux</span><small>FOUNDATION</small></span></a><p>An independent Linux distribution in development. Built openly; released only when evidence supports it.</p></div><div class="footer-column"><strong>Explore</strong><a href="../about.html">About</a><a href="../roadmap/">Roadmap</a><a href="../updates/">Updates</a><a href="../faq/">FAQ</a></div><div class="footer-column"><strong>Engineering</strong><a href="./">Documentation</a><a href="../security/">Security</a><a href="../install/">Release status</a></div><div class="footer-column"><strong>Languages</strong><a href="../" lang="en">English</a><a href="../fr/" lang="fr">Français</a><a href="../ar/" lang="ar" dir="rtl">العربية</a><a href="../community/">Community</a></div></div><div class="container footer-bottom"><span>© <span id="year">2026</span> Deku Foundation</span><span>Early-stage project · No official ISO release</span><a href="https://github.com/Deku-Foundation/Deku-Foundation.github.io">Website source ↗</a></div></footer>
+</body></html>
