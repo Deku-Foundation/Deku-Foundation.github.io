@@ -37,7 +37,7 @@ def contrast(foreground: str, background: str) -> float:
 
 def declarations(css: str, selector: str) -> list[str]:
     blocks = []
-    for match in re.finditer(r"([^{}]+)\{([^{}]*)\}", css):
+    for match in re.finditer(r"(?m)^[ \t]*([^@{}\n][^{}\n]*)\{([^{}]*)\}", css):
         selectors = {item.strip() for item in match.group(1).strip().split(",")}
         if selector in selectors:
             blocks.append(match.group(2))
