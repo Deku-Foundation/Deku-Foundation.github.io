@@ -279,10 +279,13 @@ jobs:
                   self.in_nav = False
                   self.nav_depth = 0
                   self.nav_text = []
+                  self.redirect = False
               def handle_starttag(self, tag, attrs):
                   attrs = dict(attrs)
                   if tag == "html":
                       self.lang = attrs.get("lang")
+                  if tag == "meta" and attrs.get("http-equiv", "").lower() == "refresh":
+                      self.redirect = True
                   if tag == "nav" and attrs.get("id") == "primary-nav":
                       self.in_nav = True
                       self.nav_depth = 1
@@ -305,6 +308,8 @@ jobs:
           for page in pages:
               parser = Navigation()
               parser.feed(page.read_text(encoding="utf-8"))
+              if parser.redirect and not parser.nav_text:
+                  continue
               expected = labels.get(parser.lang)
               text = " ".join(" ".join(parser.nav_text).split())
               if not expected:
