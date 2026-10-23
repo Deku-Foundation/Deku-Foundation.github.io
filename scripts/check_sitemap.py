@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+from html.parser import HTMLParser
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -32,6 +33,16 @@ def local_file(url: str) -> Path | None:
     if target.is_dir():
         target = target / "index.html"
     return target
+
+
+class HtmlLanguage(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.lang = ""
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == "html":
+            self.lang = dict(attrs).get("lang") or ""
 
 
 def main() -> int:
@@ -88,11 +99,12 @@ def main() -> int:
                 errors.append(f"sitemap.xml: alternate {lang!r} on {loc} has no local page: {href}")
                 continue
             try:
-                root = ET.parse(target).getroot()
-            except ET.ParseError as exc:
-                errors.append(f"{target.relative_to(ROOT)}: invalid HTML/XML structure: {exc}")
+                parser = HtmlLanguage()
+                parser.feed(target.read_text(encoding="utf-8"))
+            except (OSError, UnicodeDecodeError) as exc:
+                errors.append(f"{target.relative_to(ROOT)}: cannot read HTML: {exc}")
                 continue
-            html_lang = root.attrib.get("lang", "").lower()
+            html_lang = parser.lang.lower()
             if html_lang != lang and lang in SUPPORTED:
                 errors.append(f"sitemap.xml: alternate {lang!r} points to {target.relative_to(ROOT)} with lang={html_lang!r}")
         if languages and languages != SUPPORTED:
