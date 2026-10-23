@@ -59,4 +59,4 @@ Deku Linux is still in development. The website must not advertise a download, v
 
 ## Contribution
 
-Small, reviewable improvements are preferred. Follow the project’s contribution process in the main [project repository](https://github.com/Deku-Foundation/project/blob/main/CONTRIBUTING.md). Translation changes should be reviewed for meaning and technical terminology, not merely for matching word count.
+Small, reviewable improvements are preferred. Follow the project’s contribution process in the main [project repository](https://github.com/Deku-Foundation/deku-linux/blob/main/CONTRIBUTING.md). Translation changes should be reviewed for meaning and technical terminology, not merely for matching word count.
