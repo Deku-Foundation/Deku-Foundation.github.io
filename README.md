@@ -1,43 +1,42 @@
-# Deku Linux website
+# Deku Linux Website
 
-The public-facing static website for Deku Linux, an independent open-source Linux distribution in development.
+Public project website: https://deku-foundation.github.io/
 
-## Status
+## Design and structure
 
-This site describes a project in its foundation and evaluation phase. No official ISO, stable release, security audit, or production-ready distribution is claimed.
+The site is a lightweight, responsive static website hosted on GitHub Pages. Its custom visual system is designed for Deku rather than applying a third-party theme wholesale. It prioritizes clear project status, technical navigation, accessibility, mobile usability, and accurate release messaging.
 
-## Structure
-
-- `index.html` — homepage and project overview
-- `about.html` — mission and current scope
-- `docs/` — links to authoritative project documentation
-- `install/` — honest installation and release status
-- `security/` — security principles, status, and reporting guidance
-- `contribute/` — contributor onboarding
-- `faq/` — project FAQ
-- `assets/` — dependency-free CSS, JavaScript, and SVG mark
-- `.github/workflows/pages.yml` — local-link checks and GitHub Pages deployment
+- `index.html` — project landing page and roadmap overview
+- `about.html` — project scope and principles
+- `docs/` — documentation entry point
+- `install/` — release and installation status
+- `security/` — security posture and reporting guidance
+- `contribute/` — contribution guidance
+- `faq/` — project FAQs
+- `assets/styles.css` — shared responsive design system
+- `assets/main.js` — progressive enhancement for navigation and current year
+- `404.html` — branded not-found page
+- `sitemap.xml` and `robots.txt` — search-engine discovery
 
 ## Local preview
 
-Run from the repository root:
+This site intentionally avoids a framework build step. Serve the repository root with any static HTTP server, then open the local address in a browser. For example:
 
 ```sh
 python3 -m http.server 8000
 ```
 
-Open `http://localhost:8000`.
+Open `http://localhost:8000/`.
 
-## Deployment
+## Quality checklist
 
-The workflow validates local links and JavaScript syntax for pull requests. On pushes to `main`, it deploys the static site through GitHub Pages. In repository settings, select **Settings → Pages → Build and deployment → GitHub Actions**.
+- Check every page at mobile and desktop widths.
+- Navigate by keyboard and verify visible focus indicators and the skip link.
+- Test mobile navigation with keyboard, pointer, and Escape.
+- Verify internal links and ensure release statements match actual project state.
+- Confirm sitemap URLs and metadata before changing the public domain.
+- Do not publish fake download links, release dates, ratings, or security claims.
 
-Because this repository is currently named `deku-foundation`, its expected project-site URL is `https://deku-foundation.github.io/deku-foundation/`. For the organization root URL `https://deku-foundation.github.io/`, the repository must be named `Deku-Foundation.github.io`. Repository renaming must be done through GitHub settings because the connected repository tools do not expose that operation.
+## Release status
 
-## Design principles
-
-- Responsive, semantic HTML with keyboard-visible focus and reduced-motion support.
-- No analytics, trackers, remote fonts, external JS libraries, or build dependencies.
-- No fake downloads, release dates, stability claims, or security claims.
-- Architecture choices are identified as proposals until tested and accepted.
-- GitHub Actions are pinned to commit SHAs.
+Deku Linux remains in development. The website does not provide an official ISO download because no release artifact has been approved for publication.
