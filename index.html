@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#12372a">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Deku Linux is an early-stage Linux distribution. Follow its package manager, build tooling, installer and engineering roadmap in public repositories.">
+  <meta name="description" content="Deku Foundation is an independent open-source engineering organization. Deku Linux is its first platform project; Arabic-first programming language research and shared developer tooling are additional proposals.">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Deku Linux">
-  <meta property="og:title" content="Deku Linux — A distribution in development">
-  <meta property="og:description" content="An independent Linux distribution built through careful engineering, explicit security boundaries and open development.">
+  <meta property="og:site_name" content="Deku Foundation">
+  <meta property="og:title" content="Deku Foundation — Open-source engineering">
+  <meta property="og:description" content="Independent open-source engineering across Linux, developer tooling and Arabic-first programming research.">
   <meta property="og:url" content="https://deku-foundation.github.io/">
   <meta name="twitter:card" content="summary">
   <link rel="canonical" href="https://deku-foundation.github.io/">
@@ -20,16 +20,16 @@
   <link rel="icon" type="image/svg+xml" href="assets/deku-mark.svg">
   <link rel="stylesheet" href="assets/styles.css">
   <script src="assets/main.js" defer></script>
-  <title>Deku Linux — Built in the open</title>
+  <title>Deku Foundation — Open-source engineering</title>
 </head>
 <body class="home-page">
   <a class="skip-link" href="#main">Skip to content</a>
-  <div class="site-notice"><div class="container notice-inner"><span><span class="notice-dot"></span> Independent Linux distribution · Active development</span><a href="install/">No public ISO is available yet <span aria-hidden="true">↗</span></a></div></div>
+  <div class="site-notice"><div class="container notice-inner"><span><span class="notice-dot"></span> Independent open-source engineering · Multi-project portfolio</span><a href="install/">Explore the foundation portfolio <span aria-hidden="true">↗</span></a></div></div>
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="./" aria-label="Deku Linux home">
         <img src="assets/deku-mark.svg" width="40" height="40" alt="">
-        <span class="brand-wordmark">Deku<span> Linux</span><small>FOUNDATION</small></span>
+        <span class="brand-wordmark">Deku<span> Foundation</span></span>
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
         <span class="sr-only">Open navigation</span><span></span><span></span>
@@ -45,125 +45,47 @@
   </header>
 
   <main id="main">
-    <section class="hero">
-      <div class="container hero-layout">
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span> An independent Linux project</p>
-          <h1>A Linux desktop.<br><span>In development.</span></h1>
-          <p class="hero-lede">Deku Linux is in an early development stage. Current work covers a Rust package metadata and dependency planner, bounded build-plan validation, and a non-destructive installer planner. No installable ISO is available.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="ecosystem/">Explore the ecosystem <span aria-hidden="true">↗</span></a>
-            <a class="button button-outline" href="development/">Browse the repositories <span aria-hidden="true">↗</span></a>
-          </div>
-          <div class="hero-state"><span class="state-marker"></span><div><strong>Prototype stage</strong><span>The package manager, build validator and installer planner are not production tools. No install image has been released.</span></div></div>
-        </div>
-        <div class="architecture-art" aria-label="Overview of the Deku Linux architecture">
-          <div class="art-heading"><span>DEKU / SYSTEM MAP</span><span class="art-heading-dot"></span></div>
-          <div class="art-center">
-            <div class="art-core"><img src="assets/deku-mark.svg" width="56" height="56" alt=""><span>DEKU LINUX</span><small>HOST SYSTEM</small></div>
-            <div class="art-connectors" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            <div class="art-layers">
-              <div class="art-layer"><span class="layer-number">01</span><span><strong>Packages</strong><small>Metadata · Dependencies</small></span><span class="layer-mark">◇</span></div>
-              <div class="art-layer"><span class="layer-number">02</span><span><strong>Build & provenance</strong><small>Pinned inputs · Isolated builds</small></span><span class="layer-mark">↗</span></div>
-              <div class="art-layer"><span class="layer-number">03</span><span><strong>System integration</strong><small>Profiles · Recovery · KDE</small></span><span class="layer-mark">⌘</span></div>
-              <div class="art-layer"><span class="layer-number">04</span><span><strong>Application delivery</strong><small>Native packages · Flatpak</small></span><span class="layer-mark">＋</span></div>
-            </div>
-          </div>
-          <div class="art-footer"><span>OPEN DESIGN</span><span>STATUS: IN DEVELOPMENT</span></div>
-        </div>
-      </div>
-      <div class="container hero-bottom"><span>Research before adoption</span><span class="hero-bottom-rule"></span><span>Verification before release</span><span class="hero-bottom-rule"></span><span>Open work, visible trade-offs</span></div>
-    </section>
-
-    <section class="proof-strip" aria-label="Project status">
-      <div class="container proof-grid">
-        <div><span class="proof-label">01 / Package system</span><strong>Rust prototype</strong><span>Metadata validation and dependency planning</span></div>
-        <div><span class="proof-label">02 / Build infrastructure</span><strong>Validation tooling</strong><span>Plan validation, with build isolation still to implement</span></div>
-        <div><span class="proof-label">03 / Installer</span><strong>Plan-only prototype</strong><span>No partitioning or installation execution</span></div>
-        <div><span class="proof-label">04 / Release</span><strong>Not published</strong><span>No official ISO or installer image</span></div>
-      </div>
-    </section>
-
-    <section class="section section-white" id="principles">
-      <div class="container">
-        <div class="section-intro split-intro">
-          <div><p class="eyebrow">01 / Principles</p><h2>Good foundations<br><span>are not shortcuts.</span></h2></div>
-          <p class="intro-copy">A distribution is more than a desktop theme or a list of packages. It depends on a dependable way to build software, distribute it, update it and recover when something fails.</p>
-        </div>
-        <div class="principle-grid">
-          <article class="principle-card"><span class="principle-index">01</span><div class="principle-symbol"><span aria-hidden="true">◎</span></div><h3>Make decisions inspectable</h3><p>Architecture proposals, upstream choices and known limitations belong in version control—not hidden behind launch claims.</p><a href="docs/">Read the engineering notes <span aria-hidden="true">↗</span></a></article>
-          <article class="principle-card"><span class="principle-index">02</span><div class="principle-symbol"><span aria-hidden="true">⌁</span></div><h3>Keep trust boundaries narrow</h3><p>Reviewed inputs, signed repository metadata, isolated builds and least-privilege workflows are foundational requirements.</p><a href="security/">Explore the security model <span aria-hidden="true">↗</span></a></article>
-          <article class="principle-card"><span class="principle-index">03</span><div class="principle-symbol"><span aria-hidden="true">↻</span></div><h3>Prove recovery works</h3><p>Install, upgrade, rollback, boot and removal must survive repeatable tests before becoming release promises.</p><a href="roadmap/">See the release gates <span aria-hidden="true">↗</span></a></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section platform-section" id="platform">
-      <div class="container">
-        <div class="section-intro split-intro">
-          <div><p class="eyebrow">02 / The platform</p><h2>One system.<br><span>Clear responsibilities.</span></h2></div>
-          <div class="intro-copy"><p>Deku keeps recipes, builds, repositories, package planning and installation separate. This lets each component be reviewed and tested on its own terms.</p><a class="text-link" href="docs/">Explore the technical documentation <span aria-hidden="true">↗</span></a><br><a class="text-link" href="architecture/">Read the architecture and upstream research <span aria-hidden="true">↗</span></a></div>
-        </div>
-        <div class="platform-table">
-          <a class="platform-row" href="https://github.com/Deku-Foundation/deku-recipes" target="_blank" rel="noopener noreferrer"><span class="platform-row-number">01</span><span class="platform-row-name"><strong>Recipe collection</strong><small>deku-recipes</small></span><span class="platform-row-description">Pinned sources, license metadata, declared dependencies and review notes.</span><span class="status status-research">Bootstrap</span><span class="row-arrow" aria-hidden="true">↗</span></a>
-          <a class="platform-row" href="https://github.com/Deku-Foundation/deku-build" target="_blank" rel="noopener noreferrer"><span class="platform-row-number">02</span><span class="platform-row-name"><strong>Build tooling</strong><small>deku-build</small></span><span class="platform-row-description">Non-executing plan validation; actual sandboxed builds are not implemented yet.</span><span class="status status-prototype">Prototype</span><span class="row-arrow" aria-hidden="true">↗</span></a>
-          <a class="platform-row" href="https://github.com/Deku-Foundation/deku-pkg" target="_blank" rel="noopener noreferrer"><span class="platform-row-number">03</span><span class="platform-row-name"><strong>Native package manager</strong><small>deku-pkg</small></span><span class="platform-row-description">Rust metadata validation, digest checks and deterministic dependency planning.</span><span class="status status-prototype">Prototype</span><span class="row-arrow" aria-hidden="true">↗</span></a>
-          <a class="platform-row" href="https://github.com/Deku-Foundation/deku-infra" target="_blank" rel="noopener noreferrer"><span class="platform-row-number">04</span><span class="platform-row-name"><strong>Repository & release trust</strong><small>deku-infra</small></span><span class="platform-row-description">Deployment guidance and proposed signing, publication and key-management boundaries.</span><span class="status status-research">Design</span><span class="row-arrow" aria-hidden="true">↗</span></a>
-          <a class="platform-row" href="https://github.com/Deku-Foundation/deku-installer" target="_blank" rel="noopener noreferrer"><span class="platform-row-number">05</span><span class="platform-row-name"><strong>Installer planning</strong><small>deku-installer</small></span><span class="platform-row-description">Validates a non-destructive plan only; device discovery and disk writes are absent.</span><span class="status status-prototype">Plan-only</span><span class="row-arrow" aria-hidden="true">↗</span></a>
-          <a class="platform-row" href="https://github.com/Deku-Foundation/deku-system" target="_blank" rel="noopener noreferrer"><span class="platform-row-number">06</span><span class="platform-row-name"><strong>System composition</strong><small>deku-system</small></span><span class="platform-row-description">The image assembly and release pipeline remain future milestones.</span><span class="status status-research">Bootstrap</span><span class="row-arrow" aria-hidden="true">↗</span></a>
-        </div>
-        <p class="section-footnote">Repository status describes current scope, not a quality certification. Details and test evidence live in each repository.</p>
-      </div>
-    </section>
-
-    <section class="section section-white" id="compatibility">
-      <div class="container">
-        <div class="section-intro split-intro">
-          <div><p class="eyebrow">03 / Software compatibility</p><h2>Meet software where<br><span>it can run safely.</span></h2></div>
-          <p class="intro-copy">The aim is broad access to software—not a misleading promise that every package can be converted without changes. Format, ABI, services and permissions all matter.</p>
-        </div>
-        <div class="compat-grid">
-          <article class="compat-card compat-featured"><span class="compat-tag">DEFAULT TRUST PATH</span><h3>Native Deku packages</h3><p>Reviewed recipes, pinned source inputs, declared dependencies and signed repository metadata. This is the intended system-package path.</p><span class="compat-number">A</span></article>
-          <article class="compat-card"><span class="compat-tag">PREFERRED FOR EXTERNAL SOFTWARE</span><h3>Rebuild from upstream source</h3><p>Review the source and licence, patch where needed, build for the Deku target and test the resulting native artifact.</p><span class="compat-number">B</span></article>
-          <article class="compat-card"><span class="compat-tag">DESKTOP APPLICATIONS</span><h3>Flatpak integration</h3><p>Use the maintained upstream runtime and sandbox model for desktop applications, with origin and permissions visible.</p><span class="compat-number">C</span></article>
-          <article class="compat-card"><span class="compat-tag">ADVANCED · OFF BY DEFAULT</span><h3>RPM and DEB inspection</h3><p>Inspect first, never run foreign maintainer scripts by default, and reject packages whose behaviour or dependencies cannot be represented safely.</p><span class="compat-number">D</span></article>
-        </div>
-        <div class="compat-note"><span class="note-mark" aria-hidden="true">i</span><p><strong>Compatibility is tested, not assumed.</strong> Containers, AppImages and virtual machines may help with some applications, but they do not replace host drivers, kernel modules or boot-critical services. Read the <a href="docs/">compatibility strategy</a>.</p></div>
-      </div>
-    </section>
-
-    <section class="section roadmap-band" id="roadmap">
-      <div class="container roadmap-band-grid">
-        <div><p class="eyebrow eyebrow-light">04 / Roadmap</p><h2>Milestones tied<br>to evidence.</h2><p>The project does not set a release date ahead of its engineering work. Every milestone has a testable exit condition.</p><a class="button button-light" href="roadmap/">Read the full roadmap <span aria-hidden="true">↗</span></a></div>
-        <ol class="roadmap-preview">
-          <li class="roadmap-step is-current"><span class="roadmap-step-index">01</span><div><span class="step-state">CURRENT FOCUS</span><h3>Prove the foundations</h3><p>Validate metadata, package planning, source rules and safe input handling.</p></div></li>
-          <li class="roadmap-step"><span class="roadmap-step-index">02</span><div><span class="step-state">NEXT</span><h3>Build and verify artifacts</h3><p>Isolated builders, provenance, signatures and controlled repository publication.</p></div></li>
-          <li class="roadmap-step"><span class="roadmap-step-index">03</span><div><span class="step-state">AFTER PACKAGE GATES</span><h3>Transactions and recovery</h3><p>Temporary-root installation, collision tests, interrupted updates and rollback.</p></div></li>
-          <li class="roadmap-step"><span class="roadmap-step-index">04</span><div><span class="step-state">RELEASE GATE</span><h3>Bootable system image</h3><p>VM install, boot and upgrade tests before any public ISO announcement.</p></div></li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section community-section" id="community">
-      <div class="container community-grid">
-        <div><p class="eyebrow">05 / Community & governance</p><h2>Open work needs<br><span>good neighbours.</span></h2><p class="intro-copy">Contributions should improve the project in ways others can understand, maintain and verify. Clear issues, small changes and respectful review are more useful than volume.</p><a class="text-link" href="community/">How to take part <span aria-hidden="true">↗</span></a></div>
-        <div class="community-links">
-          <a href="https://github.com/Deku-Foundation/deku-linux/issues" target="_blank" rel="noopener noreferrer"><span class="community-link-icon">↳</span><span><strong>Discuss a problem or proposal</strong><small>Open an issue with context, evidence and a concrete question.</small></span><span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/Deku-Foundation/deku-linux/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer"><span class="community-link-icon">＋</span><span><strong>Contribute code or documentation</strong><small>Read the contribution process before starting a large change.</small></span><span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/Deku-Foundation/deku-linux/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer"><span class="community-link-icon">⌑</span><span><strong>Report a security concern</strong><small>Follow the project's disclosure policy; do not post secrets publicly.</small></span><span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/Deku-Foundation" target="_blank" rel="noopener noreferrer"><span class="community-link-icon">⌘</span><span><strong>Explore the repositories</strong><small>Review source, commits, tests and open engineering work.</small></span><span aria-hidden="true">↗</span></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="closing-cta">
-      <div class="container closing-cta-inner"><div><p class="eyebrow eyebrow-light">A project in the open</p><h2>Read the code.<br><span>Question the decisions.</span></h2><p>Follow concrete changes and test evidence in the repositories.</p></div><div class="closing-actions"><a class="button button-light" href="https://github.com/Deku-Foundation" target="_blank" rel="noopener noreferrer">Browse the organisation <span aria-hidden="true">↗</span></a><a class="closing-secondary" href="updates/">Where to follow changes <span aria-hidden="true">↗</span></a></div></div>
-    </section>
-  </main>
+<section class="hero"><div class="container hero-layout">
+<div class="hero-copy"><p class="eyebrow"><span class="eyebrow-line"></span>Independent open-source engineering</p>
+<h1>Build in the open.<br><span>Across technologies.</span></h1>
+<p class="hero-lede">Deku Foundation is an independent open-source engineering organization. Deku Linux is its first platform project. The foundation is also researching an Arabic-first programming language and reusable developer tooling. These efforts remain proposals until working code and evidence exist.</p>
+<div class="hero-actions"><a class="button button-primary" href="ecosystem/">Explore current repositories <span aria-hidden="true">↗</span></a><a class="button button-outline" href="about.html">About the foundation <span aria-hidden="true">↗</span></a></div>
+<div class="hero-state"><span class="state-marker"></span><div><strong>Early-stage portfolio</strong><span>Public source and design work are available; not every proposed project has an implementation or release.</span></div></div></div>
+<div class="architecture-art" aria-label="Deku Foundation project portfolio"><div class="art-heading"><span>DEKU / FOUNDATION MAP</span><span class="art-heading-dot"></span></div><div class="art-center"><div class="art-core"><img src="assets/deku-mark.svg" width="56" height="56" alt=""><span>DEKU FOUNDATION</span><small>OPEN-SOURCE PORTFOLIO</small></div><div class="art-connectors" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div class="art-layers">
+<div class="art-layer"><span class="layer-number">01</span><span><strong>Linux platform</strong><small>Deku Linux · Prototype</small></span><span class="layer-mark">◇</span></div>
+<div class="art-layer"><span class="layer-number">02</span><span><strong>Arabic-first language</strong><small>Research proposal</small></span><span class="layer-mark">ع</span></div>
+<div class="art-layer"><span class="layer-number">03</span><span><strong>Developer tooling</strong><small>Reuse before reinventing</small></span><span class="layer-mark">↗</span></div>
+<div class="art-layer"><span class="layer-number">04</span><span><strong>Shared engineering</strong><small>CI · security · governance</small></span><span class="layer-mark">＋</span></div>
+</div></div><div class="art-footer"><span>OPEN DEVELOPMENT</span><span>STATUS: EARLY STAGE</span></div></div></div>
+<div class="container hero-bottom"><span>Upstream before forks</span><span class="hero-bottom-rule"></span><span>Evidence before claims</span><span class="hero-bottom-rule"></span><span>One clear status per project</span></div></section>
+<section class="proof-strip" aria-label="Foundation portfolio status"><div class="container proof-grid">
+<div><span class="proof-label">01 / Platform</span><strong>Deku Linux</strong><span>Prototype components; no public ISO</span></div>
+<div><span class="proof-label">02 / Language</span><strong>Proposal stage</strong><span>No compiler or self-hosted toolchain yet</span></div>
+<div><span class="proof-label">03 / Developer tools</span><strong>Research first</strong><span>Reuse maintained upstream projects where practical</span></div>
+<div><span class="proof-label">04 / Engineering</span><strong>Public by default</strong><span>Reviewable source, tests and explicit limits</span></div>
+</div></section>
+<section class="section section-white" id="portfolio"><div class="container">
+<div class="section-intro split-intro"><div><p class="eyebrow">01 / Project portfolio</p><h2>Several projects.<br><span>Clear boundaries.</span></h2></div><p class="intro-copy">The foundation is not synonymous with one operating system. Each workstream should have a written purpose, an owner, a testable milestone and an honest maturity label before it grows.</p></div>
+<div class="principle-grid">
+<article class="principle-card"><span class="principle-index">01 / PLATFORM</span><div class="principle-symbol"><span aria-hidden="true">◇</span></div><h3>Deku Linux</h3><p>The first platform project. Its public repositories prototype package metadata, dependency planning, build-plan validation, system manifests and non-destructive installation planning. No installable release is available.</p><a href="ecosystem/">Review the repository map <span aria-hidden="true">↗</span></a></article>
+<article class="principle-card"><span class="principle-index">02 / LANGUAGE</span><div class="principle-symbol"><span aria-hidden="true">ع</span></div><h3>Arabic-first programming</h3><p>A proposed language roadmap starts with a Rust-hosted prototype and treats Unicode identifiers, bidirectional text, diagnostics and interoperability as core design work. No compiler is claimed to exist.</p><a href="https://github.com/Deku-Foundation/deku-linux/blob/dev/docs/strategy/foundation-and-arabic-language-strategy.md">Read the language strategy <span aria-hidden="true">↗</span></a></article>
+<article class="principle-card"><span class="principle-index">03 / ENGINEERING</span><div class="principle-symbol"><span aria-hidden="true">⌁</span></div><h3>Shared engineering practice</h3><p>Build provenance, least-privilege automation, release evidence, documentation and reusable developer workflows are foundation-wide practices—not separate products until a maintained implementation exists.</p><a href="development/">See how work is reviewed <span aria-hidden="true">↗</span></a></article>
+</div></div></section>
+<section class="section platform-section" id="principles"><div class="container"><span id="roadmap"></span>
+<div class="section-intro split-intro"><div><p class="eyebrow">02 / Operating principles</p><h2>Reuse what works.<br><span>Own the integration.</span></h2></div><p class="intro-copy">Independent engineering does not mean rebuilding every component. It means setting clear goals, choosing suitable upstream projects, maintaining integration quality and being accountable for what is shipped.</p></div>
+<div class="principle-grid">
+<article class="principle-card"><span class="principle-index">01</span><div class="principle-symbol"><span aria-hidden="true">◎</span></div><h3>Research before implementation</h3><p>Compare maintained upstream projects against requirements, license, security updates, operational cost and recovery behavior before starting a replacement.</p><a href="architecture/">Read the technical evaluations <span aria-hidden="true">↗</span></a></article>
+<article class="principle-card"><span class="principle-index">02</span><div class="principle-symbol"><span aria-hidden="true">⌁</span></div><h3>Keep trust boundaries narrow</h3><p>Reviewed changes, pinned inputs, least-privilege CI and a separation between building, signing and publishing are design constraints—not release claims.</p><a href="security/">Review current security constraints <span aria-hidden="true">↗</span></a></article>
+<article class="principle-card"><span class="principle-index">03</span><div class="principle-symbol"><span aria-hidden="true">↻</span></div><h3>Promote only proven work</h3><p>Develop and test on dev first. Update main only after the relevant checks pass; a green CI run proves those checks passed, not that a full distribution is production-ready.</p><a href="roadmap/">Explore milestones and exit criteria <span aria-hidden="true">↗</span></a></article>
+</div>
+<div class="release-warning"><span aria-hidden="true">i</span><p><strong>No official Deku Linux ISO is available.</strong> The language is still a proposal, and the Linux component repositories remain prototypes. Follow the public source for verified progress; do not treat a roadmap item as a released feature.</p></div>
+<div class="hero-actions"><a class="button button-primary" href="ecosystem/">Explore all current repositories <span aria-hidden="true">↗</span></a><a class="button button-outline" href="community/">Contribute to the work <span aria-hidden="true">↗</span></a></div>
+</div></section>
+</main>
 
   <footer class="site-footer">
     <div class="container footer-main">
-      <div class="footer-brand-block"><a class="brand footer-brand" href="./"><img src="assets/deku-mark.svg" width="36" height="36" alt=""><span class="brand-wordmark">Deku<span> Linux</span><small>FOUNDATION</small></span></a><p>An independent Linux distribution in development. Built openly; released only when evidence supports it.</p></div>
+      <div class="footer-brand-block"><a class="brand footer-brand" href="./"><img src="assets/deku-mark.svg" width="36" height="36" alt=""><span class="brand-wordmark">Deku<span> Foundation</span></span></a><p>An independent open-source engineering organization.</p></div>
       <div class="footer-column"><strong>Explore</strong><a href="about.html">About Deku</a><a href="roadmap/">Roadmap</a><a href="updates/">Project updates</a><a href="faq/">FAQ</a></div>
       <div class="footer-column"><strong>Engineering</strong><a href="docs/">Documentation</a><a href="security/">Security</a><a href="install/">Release status</a><a href="https://github.com/Deku-Foundation/deku-linux" target="_blank" rel="noopener noreferrer">Governance ↗</a></div>
       <div class="footer-column"><strong>Languages</strong><a href="./" lang="en">English</a><a href="fr/" lang="fr">Français</a><a href="ar/" lang="ar" dir="rtl">العربية</a><a href="community/">Community</a></div>

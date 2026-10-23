@@ -17,6 +17,20 @@
     nav.insertBefore(ecosystemLink, nav.firstElementChild);
   }
 
+  const foundationLabels = { en: "Foundation", fr: "Fondation", ar: "المؤسسة" };
+  if (nav && !nav.querySelector("[data-foundation-nav]")) {
+    const foundationLink = document.createElement("a");
+    foundationLink.href = language.startsWith("fr") ? "/fr/about/" : language.startsWith("ar") ? "/ar/about/" : "/about.html";
+    foundationLink.dataset.foundationNav = "true";
+    foundationLink.textContent = foundationLabels[language.slice(0, 2)] || foundationLabels.en;
+    const ecosystemLink = nav.querySelector("[data-ecosystem-nav]");
+    if (ecosystemLink && ecosystemLink.nextSibling) {
+      nav.insertBefore(foundationLink, ecosystemLink.nextSibling);
+    } else {
+      nav.insertBefore(foundationLink, nav.firstElementChild);
+    }
+  }
+
   const explorer = document.querySelector("[data-ecosystem-explorer]");
   if (explorer) {
     const cards = Array.from(explorer.querySelectorAll("[data-ecosystem-card]"));
