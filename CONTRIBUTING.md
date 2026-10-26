@@ -13,10 +13,9 @@ Deku Foundation hosts several early-stage open-source engineering projects. Cont
 
 - `main` is the reviewed, publishable baseline. Website deployment and scheduled release-facing automation run from this branch.
 - `dev` is the shared integration branch. Implement and validate work here first.
-- Run the repository's checks on `dev`, review the diff, then open a pull request from `dev` to `main`.
-- Merge only when required checks pass and the change is understood. Confirm deployment or post-merge checks after promotion.
-- Keep the branch set to `main` and `dev`. Temporary branches are exceptions for an open pull request or a documented need; do not create a new permanent branch for every task.
-- Contributors who cannot safely share the integration branch should use a fork and submit a pull request.
+- Maintainers work directly on `dev`. Run the relevant checks and review the diff; when required checks pass, fast-forward `main` to the exact verified `dev` commit. Do not use a pull request to promote `dev` to `main`.
+- Keep `main` and `dev` as the only persistent repository branches. Do not create in-repository feature branches for routine maintainer work.
+- External contributors should use a fork and submit changes for review into `dev`. Confirm the site deployment and post-promotion checks after `main` changes.
 
 ## Pull request checklist
 
@@ -34,3 +33,7 @@ Prefer maintained upstream components over unnecessary forks. Keep changes focus
 ## Conduct and security
 
 Follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Do not disclose exploitable vulnerability details in public issues; follow [SECURITY.md](SECURITY.md).
+
+## Documentation style
+
+Write for the reader's task. State what is implemented, what has been tested and what remains planned; keep important limitations and translations aligned. Follow the [Deku Foundation technical writing standard](https://github.com/Deku-Foundation/.github/blob/main/EDITORIAL_STYLE.md).
