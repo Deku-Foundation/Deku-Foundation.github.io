@@ -1,6 +1,6 @@
 # Deku Foundation website
 
-The public website is a build-free static site for Deku Foundation, an independent multi-project open-source engineering organization: <https://deku-foundation.github.io/>. Deku Linux is the first platform project; the portfolio also includes Rukn, an experimental Arabic-first language interpreter, Android projects Deku Keyboard and Deku Satr, and shared engineering infrastructure. Each project has its own scope, maturity label and release gates.
+This repository publishes the static website for [Deku Foundation](https://deku-foundation.github.io/). The site documents the foundation-wide portfolio: Deku Linux, Rukn, Deku Keyboard, Deku Satr and shared engineering tools. Each project has a separate scope and status; a design proposal or prototype is not presented as a released product.
 
 ## Governance and contribution
 
