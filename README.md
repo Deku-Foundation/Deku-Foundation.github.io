@@ -1,6 +1,6 @@
 # Deku Foundation website
 
-The public website is a build-free static site for Deku Foundation, an independent multi-project open-source engineering organization: <https://deku-foundation.github.io/>. Deku Linux is the first platform project; the foundation also publishes language research and cross-project engineering practices.
+The public website is a build-free static site for Deku Foundation, an independent multi-project open-source engineering organization: <https://deku-foundation.github.io/>. Deku Linux is the first platform project; the portfolio also includes Rukn, an experimental Arabic-first language interpreter, Android projects Deku Keyboard and Deku Satr, and shared engineering infrastructure. Each project has its own scope, maturity label and release gates.
 
 ## Governance and contribution
 
@@ -21,7 +21,7 @@ The primary project pages are available in English, French and Arabic: overview,
 ## Structure
 
 - `index.html`, `fr/index.html` and `ar/index.html` — the foundation-wide portfolio landing page in English, French and Arabic.
-- `ecosystem/`, `fr/ecosystem/` and `ar/ecosystem/` — a multilingual directory for the seven core repositories, project information areas and contribution routes.
+- `ecosystem/`, `fr/ecosystem/` and `ar/ecosystem/` — the multilingual portfolio directory for 19 public project repositories, including the independent Android applications and Rukn; the website repository and organization metadata repository are not counted as project entries.
 - `fr/` and `ar/` — translated page routes with equivalent information architecture.
 - `about.html`, `fr/about/` and `ar/about/` — foundation mission, current portfolio, upstream-first principles and the research/prototype/release workflow.
 - `docs/` — documentation landing page and website standards.
