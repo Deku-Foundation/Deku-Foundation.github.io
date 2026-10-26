@@ -11,19 +11,19 @@ Each active repository uses exactly two long-lived branches:
 - `main` — reviewed, stable, publishable state.
 - `dev` — integration and testing state; changes may be incomplete here.
 
-Do not create a new branch for routine work. Make a focused, atomic commit to `dev`, or use a temporary branch only when parallel work, an external contribution or a risky isolated experiment genuinely requires it. Remove temporary branches after their work is merged. Do not create a new repository to hold a feature that belongs in an existing repository.
+Do not create a repository-side feature branch for routine maintainer work. Make a focused, atomic commit to `dev`; external contributors should use forks and submit changes for review into `dev`. Do not create a new repository to hold a feature that belongs in an existing repository.
 
 Release flow:
 
 1. Make a small change on `dev` with a clear commit message.
 2. Run the repository's automated tests and inspect the actual results.
 3. Review the diff, security implications, documentation and status claims.
-4. Open one pull request from `dev` to `main` when the complete change is ready.
-5. Merge only when required checks pass and any required review is complete.
-6. Synchronize `dev` to the resulting `main` commit after merge, then verify that both branches have the same tree.
+4. When all required checks pass, fast-forward `main` directly to the exact `dev` commit that was checked; this maintainer promotion does not use a pull request.
+5. Confirm that `main` and `dev` point to the same commit, then inspect post-promotion CI and deployment results.
+6. Do not start another change until those results have been reviewed.
 7. Publish only from the approved `main` state. A successful CI run is not, by itself, proof that an OS image boots or is safe to install.
 
-Protect `main` against force pushes and accidental deletion; require pull requests and the relevant CI checks where GitHub repository settings support it. Do not silently bypass failing checks. If the organization cannot enforce a rule with its current plan or permissions, document the limitation rather than claiming enforcement.
+Restrict who can update `main`, reject force pushes and accidental deletion, and require the relevant CI checks where GitHub settings support that policy. The permitted maintainer promotion is a fast-forward from the exact checked `dev` commit, not a general direct-edit path. External changes are reviewed through forks and pull requests into `dev`. Do not silently bypass failing checks. If repository settings cannot enforce a rule, document that limitation instead of claiming enforcement.
 
 ## Repository boundaries
 
@@ -80,3 +80,7 @@ Do not infer production readiness from a passing schema test, successful compila
 3. Evaluate upstream system-image and installer technology before writing those layers from scratch.
 4. Complete the smallest end-to-end prototype: pinned inputs → isolated build → verifiable artifact → VM boot → update/recovery test.
 5. Define a separate, staged research plan for the Arabic-first programming language; do not imply a compiler or self-hosting implementation exists until it does.
+
+## Documentation style
+
+Write for the reader's task. State what is implemented, what has been tested and what remains planned; preserve limitations and keep translations aligned. Follow the [Deku Foundation technical writing standard](https://github.com/Deku-Foundation/.github/blob/main/EDITORIAL_STYLE.md).
